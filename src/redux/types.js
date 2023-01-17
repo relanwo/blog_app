@@ -1,0 +1,1 @@
+export const ARTICLES_LOAD = 'ARTICLES_LOAD';
