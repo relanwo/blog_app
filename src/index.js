@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 // import { rootReducer } from './redux/rootReducer';
-import App from './components/app/app';
+import App from './components/App/App';
 import store from './store/store';
 import { BrowserRouter } from 'react-router-dom';
 

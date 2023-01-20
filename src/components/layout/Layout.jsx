@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import style from './layout.module.scss';
+import style from './Layout.module.scss';
 import { Link, Outlet } from 'react-router-dom';
 import { Layout as AntdLayout, Button, Spin, Alert } from 'antd';
 const { Header, Content, Footer } = AntdLayout;

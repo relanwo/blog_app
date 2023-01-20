@@ -3,7 +3,7 @@
 // import style from './posts-list.module.scss';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchArticles } from '../../store/articleSlice';
+import { fetchArticles } from '../../store/article-slice';
 // import {useParams }
 // import uniqid from 'uniqid';
 import {
@@ -14,7 +14,7 @@ import {
 	Link,
 } from 'react-router-dom';
 
-import Post from '../post/post';
+import Post from '../Post/Post';
 
 export default function PostsList() {
 	const { slug } = useParams();
@@ -36,7 +36,7 @@ export default function PostsList() {
 	const elements = Array.isArray(articles)
 		? articles.map((res) => (
 				// <Link key={res.slug} to={`/articles/${res.slug}`}>
-					<Post key={res.slug} data={res} />
+				<Post key={res.slug} data={res} />
 				// </Link>
 		  ))
 		: null;

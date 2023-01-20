@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import { createLogger } from 'redux-logger'
-import articleReducer from "./articleSlice";
+import articleReducer from "./article-slice";
 // import paginationReducer from "./paginationSlice";
 
 export default configureStore({

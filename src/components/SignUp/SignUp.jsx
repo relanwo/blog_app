@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import style from './sign-up.module.scss';
+import style from './SignUp.module.scss';
 import { Button, Form, Input, message, Space, Title, Checkbox, Divider } from 'antd';
+import { useForm } from "react-hook-form";
 
-function SignIn() {
+function SignUp() {
+  const { register, handleSubmit } = useForm();
+
 	return (
 		<Form className={style['form']} layout="vertical">
 			<p className={style['title']}>Create new account</p>
@@ -63,14 +66,16 @@ function SignIn() {
 			<Checkbox className={style['checkbox']} defaultChecked>
 				I agree to the processing of my personal information
 			</Checkbox>
-			<Button type="primary" htmlType="submit" className={style['button']}>
+			<Button 
+        type="primary" htmlType="submit" className={style['button']}
+        >
 				Create
 			</Button>
 			<div className={style['underbutton-text']}>
-				Already have an account? <Link href="/sign-in">Sign In</Link>.
+				Already have an account? <Link to="/sign-in">Sign In</Link>.
 			</div>
 		</Form>
 	);
 }
 
-export default SignIn;
+export default SignUp;

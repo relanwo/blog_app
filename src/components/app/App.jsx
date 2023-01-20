@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useMemo } from 'react';
-import style from './app.module.scss';
+import style from './App.module.scss';
 import { Layout as AntdLayout, Button, Spin, Alert } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import PostsList from '../posts-list/posts-list';
-import CustomPagination from '../custom-pagination/custom-pagination';
-import Post from '../post/post';
-import SingleArticlePage from '../pages/single-article-page';
+import PostsList from '../PostsList/PostsList';
+import CustomPagination from '../CustomPagination/CustomPagination';
+import Post from '../Post/Post';
+import SingleArticlePage from '../pages/SingleArticlePage';
 
 import { Routes, Route, Link, Redirect } from 'react-router-dom';
-import MainPage from '../pages/main-page';
-import NotFoundPage from '../pages/not-found-page';
-import Layout from '../layout/layout';
-import SignInPage from '../pages/sign-in-page';
-import SignUpPage from '../pages/sign-up-page';
+import MainPage from '../pages/MainPage';
+import NotFoundPage from '../pages/NotFoundPage';
+import Layout from '../Layout/Layout';
+import SignInPage from '../pages/SignInPage';
+import SignUpPage from '../pages/SignUpPage';
 const { Header, Content, Footer } = AntdLayout;
 
 function App() {

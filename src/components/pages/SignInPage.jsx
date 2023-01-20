@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Routes, Route, Link, Redirect } from 'react-router-dom';
-import Post from '../post/post';
+import Post from '../Post/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown'
-import SignUp from '../sign-up/sign-up';
+import ReactMarkdown from 'react-markdown';
+import SignIn from '../SignIn/SignIn';
 
-function SignUpPage() {
+function SignInPage() {
 	// console.log('useParams', useParams())
 	// const { slug } = useParams();
 
@@ -20,22 +20,22 @@ function SignUpPage() {
 	// 	}
 	// });
 
-  // // let element
-  // useEffect(() => {
-  // }, [])
-  // const element = Array.isArray(articles) && articles.find((res) => (res.slug === slug))
+	// // let element
+	// useEffect(() => {
+	// }, [])
+	// const element = Array.isArray(articles) && articles.find((res) => (res.slug === slug))
 
-  // const params = useMemo(() => {
-  //   return element
-  // }, [element])
+	// const params = useMemo(() => {
+	//   return element
+	// }, [element])
 
-  // console.log('params',params)
+	// console.log('params',params)
 	return (
-    <>
-      <SignUp/>
-    </>
-  )
-  // return <h2>{slug}</h2>
+		<>
+			<SignIn />
+		</>
+	);
+	// return <h2>{slug}</h2>
 }
 
-export default SignUpPage;
+export default SignInPage;
