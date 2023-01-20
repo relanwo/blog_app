@@ -2,7 +2,7 @@
 import { Pagination } from 'antd';
 import style from './custom-pagination.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePage } from '../../store/paginationSlice';
+import { changePage } from '../../store/articleSlice';
 
 const CustomPagination = () => {
 	const dispatch = useDispatch();
@@ -13,7 +13,8 @@ const CustomPagination = () => {
 			return articlesCount; 
 		}
 	});
-  const page = useSelector((state) => state.pagination.page)
+  const page = useSelector((state) => state.articles.page)
+  const pageSize = useSelector((state) => state.articles.pageSize)
 
   console.log('page >',page)
 
@@ -22,7 +23,7 @@ const CustomPagination = () => {
       className={style['pagination']} 
       current={page}
       hideOnSinglePage
-      pageSize={20}
+      pageSize={pageSize}
       total={articlesCount}
       onChange={(e) => dispatch(changePage(e))}
       showSizeChanger={false}

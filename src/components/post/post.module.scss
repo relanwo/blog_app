@@ -6,10 +6,22 @@
   padding: 15px;
   display: flex;
   margin-bottom: 26px;
+  flex-wrap: wrap;
+  // height: 77vh;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .content {
   width: 72%;
+}
+
+.title-link {
+  text-decoration: none;
 }
 
 .title {
@@ -20,6 +32,9 @@
   display: inline;
   margin-right: 13px;
   font-weight: 400;
+  cursor: pointer;
+  // text-decoration: none;
+  overflow-wrap: anywhere; // / break-word
 }
 
 .likes {
@@ -55,6 +70,7 @@
   /* @text-color-secondary */
 
   color: rgba(0, 0, 0, 0.5);
+  overflow-wrap: anywhere; // / break-word
 }
 
 .description {
@@ -62,6 +78,7 @@
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
   margin: 0;
+  overflow-wrap: anywhere; // / break-word
 }
 
 .sider {
@@ -93,3 +110,15 @@
   margin-left: 12px;
   border-radius: 100%;
 }
+
+.body {
+  overflow-wrap: anywhere; // / break-word
+  /* @font-size-base: 14px */
+  font-family: 'Inter UI';
+  font-size: 20px;
+  line-height: 28px;
+  /* or 140% */
+
+  /* @text-color */
+  color: rgba(0, 0, 0, 0.75);
+  }

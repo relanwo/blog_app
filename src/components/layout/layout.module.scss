@@ -1,0 +1,44 @@
+.header {
+  background: #FFFFFF;
+  height: 80px;
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: 0 22px 26px 0; */
+  padding: 0 22px;
+}
+
+.logo {
+  cursor: pointer;
+  margin: 0;
+  text-decoration: none;
+  /* @heading-color */
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.sign-in {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.sign-up {
+  /* @success-color */
+  color: #52C41A;
+}
+
+.spin {
+  position: relative;
+  // top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 50px;
+}
+
+.error {
+  height: 55px;
+}

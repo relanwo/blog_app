@@ -14,7 +14,7 @@ const paginationSlice = createSlice({
   name: 'pagination', 
   initialState: {
     page: 1,
-    // pageSize: 5
+    pageSize: 5
   },
   reducers: {
     changePage(state, action) {
