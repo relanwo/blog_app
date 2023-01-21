@@ -13,8 +13,8 @@ import { Routes, Route, Link, Redirect } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Layout from '../Layout/Layout';
-import SignInPage from '../pages/SignInPage';
-import SignUpPage from '../pages/SignUpPage';
+import SignInPage from '../pages/LoginPage';
+import SignUpPage from '../pages/RegisterPage';
 const { Header, Content, Footer } = AntdLayout;
 
 function App() {
@@ -22,13 +22,13 @@ function App() {
 		<div className={style['app']}>
 			<Routes>
 				<Route path="/" element={<Layout />}>
-					<Route index element={<MainPage />} />
-					<Route path="articles" element={<MainPage />} />
-					<Route path="articles/:slug" element={<SingleArticlePage />} />
-					<Route path="sign-in" element={<SignInPage />} />
-					<Route path="sign-up" element={<SignUpPage />} />
-					{/* <Route path="profile " element={<MainPage />} /> */}
-					<Route path="*" element={<NotFoundPage />} />
+        <Route index element={<MainPage />} />
+        <Route path="articles" element={<MainPage />} />
+        <Route path="articles/:slug" element={<SingleArticlePage />} />
+        <Route path="sign-in" element={<SignInPage />} />
+        <Route path="sign-up" element={<SignUpPage />} />
+        {/* <Route path="profile " element={<MainPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>
 		</div>

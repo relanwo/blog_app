@@ -19,12 +19,11 @@ import {
 const { Header, Content, Footer } = Layout;
 
 function MainPage() {
-	// const status = useSelector((state) => state.articles.status);
 	const { status, error } = useSelector((state) => state.articles);
-	// console.log('error', error)
-	// console.log('status', status)
+
 	return (
 		<>
+      {/* <Redirect to="/sign-in"/> */}
 			{status === 'loading' && <Spin className={'spin'} size={'large'} />}
 			{/* {error && <h2>{error}</h2>} */}
 			{error ? (

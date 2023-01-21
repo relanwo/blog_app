@@ -39,12 +39,48 @@
 .input {
   padding: 8px 12px;
   margin-bottom: 12px;
+  /* display: inline; */
+  width: 92%;
+  flex: 100%;
+  display: block;
+  border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.input-error {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  /* display: inline; */
+  width: 92%;
+  flex: 100%;
+  display: block;
+  // border: 1px solid #D9D9D9;
+  border-radius: 4px;
+  margin-top: 4px;
+  border: 1px solid #F5222D;
 }
 
 .wrapper {
   // display: inline;
   width: 100%;
   margin-bottom: 0;
+
+  /* Regular / 14px | 22px */
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  // display: flex;
+  // align-items: center;
+
+  /* Grey / grey-9 */
+
+  color: #262626;
 }
 
 .button {
@@ -60,8 +96,44 @@
   font-size: 16px;
   line-height: 24px;
   margin-top: 21px;
+
+  background: #1890FF; /* Синий цвет фона */ 
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .underbutton-text {
   margin: 8px auto 0 auto;
+  /* Regular / 12px | 20 px */
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  text-align: center;
+
+  /* Grey / grey-7 */
+
+  color: #8C8C8C;
+}
+
+.link {
+  text-decoration: none;
+  color: #1890FF;
+}
+
+.error {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #F5222D;
+  margin: 0;
+  position: relative;
+  top: -5px;
 }
