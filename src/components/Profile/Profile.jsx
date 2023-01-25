@@ -50,6 +50,7 @@ const Profile = () => {
           className={style['input']} 
           // placeholder={username}
           defaultValue={username}
+          style={{border: errors.username ? '1px solid red' : '' }}
         />
       </label>
       <div>
@@ -70,7 +71,8 @@ const Profile = () => {
           className={style['input']} 
           // placeholder={email}
           defaultValue={email}
-          />
+          style={{border: errors.email ? '1px solid red' : '' }}
+        />
       </label>
       <div>
         {errors.email && <p className={style['error']}>{errors.email.message || "Some error"}</p>}
@@ -91,6 +93,7 @@ const Profile = () => {
             }
           })}
           className={style['input']} placeholder="New password"
+          style={{border: errors.password ? '1px solid red' : '' }}
         />
       </label>
       <div>
@@ -109,6 +112,7 @@ const Profile = () => {
             }
           })}
           className={style['input']} placeholder="Avatar image (url)"
+          style={{border: errors.avatar_image ? '1px solid red' : '' }}
         />
       </label>
       <div>

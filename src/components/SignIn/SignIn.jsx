@@ -61,7 +61,9 @@ function SignIn() {
                 message: "Email is not valid"
               }
             })}
-            className={style[`${errors ? 'input-error': 'input'}`]} placeholder="Email address"
+            className={style['input']} placeholder="Email address"
+            // style={{ border: errors.email ? '1px solid red' : '' }}
+            style={{border: errors.email ? '1px solid red' : '' }}
           />
         </label>
         <div>
@@ -74,7 +76,8 @@ function SignIn() {
             {...register("password", {
               required: "Password field can't be blank"
             })}
-            className={style[`${errors ? 'input-error': 'input'}`]} placeholder="Password"
+            className={style['input']} placeholder="Password"
+            style={{border: errors.password ? '1px solid red' : '' }}
           />
         </label>
         <div>

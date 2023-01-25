@@ -20,7 +20,8 @@ function SignUp() {
     reset, //очистит поля ввода после отправки
     formState: { errors, isValid } // объект со всякими свойствами
    } = useForm({
-    mode: "onChange"
+    mode: "onChange",
+    defaultValues: { checkbox: true }
    });
 
   const onSubmit = data => {
@@ -55,6 +56,7 @@ function SignUp() {
               }
             })}
             className={style['input']} placeholder="Username"
+            style={{border: errors.username ? '1px solid red' : '' }}
           />
         </label>
         <div>
@@ -73,6 +75,7 @@ function SignUp() {
               }
             })}
             className={style['input']} placeholder="Email address"
+            style={{border: errors.email ? '1px solid red' : '' }}
           />
         </label>
         <div>
@@ -94,6 +97,7 @@ function SignUp() {
               }
             })}
             className={style['input']} placeholder="Password"
+            style={{border: errors.password ? '1px solid red' : '' }}
           />
         </label>
         <div>
@@ -107,6 +111,7 @@ function SignUp() {
               required: "Password field can't be blank",
             })}
             className={style['input']} placeholder="Password"
+            style={{border: watch('password') !== watch('rep_password') ? '1px solid red' : '' }}
           />
         </label>
         <div>
@@ -114,9 +119,20 @@ function SignUp() {
         </div>
 
         <Divider className={style['divider']}/>
-        <Checkbox className={style['checkbox']} defaultChecked>
+
+        <label
+          // for='check'
+          className={style['checkbox']} 
+          {...register("checkbox", {
+            // required: "Password field can't be blank",
+          })}
+        >
+          <input type="checkbox" 
+          // id="check"
+          // defaultChecked 
+          />
           I agree to the processing of my personal information
-        </Checkbox>
+        </label>
 
         <button className={style['button']}
           type="submit"
@@ -133,69 +149,6 @@ function SignUp() {
 
       </form>
     </>
-		// <Form className={style['form']} layout="vertical">
-		// 	<p className={style['title']}>Create new account</p>
-		// 	<Form.Item
-		// 		className={style['wrapper']}
-		// 		name="username"
-		// 		label="Username"
-		// 		rules={[
-		// 			{ required: false },
-		// 			{ type: 'url', warningOnly: true },
-		// 			{ type: 'string', min: 6 },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Username" />
-		// 	</Form.Item>
-		// 	<Form.Item
-		// 		className={style['wrapper']}
-		// 		name="email"
-		// 		label="Email address"
-		// 		rules={[
-		// 			{ required: false },
-		// 			{ type: 'url', warningOnly: true },
-		// 			{ type: 'string', min: 6 },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Email address" />
-		// 	</Form.Item>
-		// 	<Form.Item
-		// 		className={style['wrapper']}
-		// 		name="password"
-		// 		label="Password"
-		// 		rules={[
-		// 			{ required: false },
-		// 			{ type: 'url', warningOnly: true },
-		// 			{ type: 'string', min: 6 },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Password" />
-		// 	</Form.Item>
-		// 	<Form.Item
-		// 		className={style['wrapper']}
-		// 		name="repaet password"
-		// 		label="Repeat Password"
-		// 		rules={[
-		// 			{ required: false },
-		// 			{ type: 'url', warningOnly: true },
-		// 			{ type: 'string', min: 6 },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Password" />
-		// 	</Form.Item>
-    //   <Divider className={style['divider']}/>
-		// 	<Checkbox className={style['checkbox']} defaultChecked>
-		// 		I agree to the processing of my personal information
-		// 	</Checkbox>
-		// 	<Button 
-    //     type="primary" htmlType="submit" className={style['button']}
-    //     >
-		// 		Create
-		// 	</Button>
-		// 	<div className={style['underbutton-text']}>
-		// 		Already have an account? <Link to="/sign-in">Sign In</Link>.
-		// 	</div>
-		// </Form>
 	);
 }
 

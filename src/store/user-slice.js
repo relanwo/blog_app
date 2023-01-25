@@ -15,6 +15,12 @@ export const postUser = createAsyncThunk(
 			});
       console.log('response', response)
       // console.log('token', response.body.user.token)
+      // relanwo@gmail.com
+      if (response.status === 422) {
+        // const errors = await response.json();
+        // console.log('response.body', await response.json())
+        throw new Error(JSON.stringify(await response.json()))
+      }
 			if (!response.ok) {
 				throw new Error("Can't create a user. Server Error");
 			}
@@ -25,7 +31,16 @@ export const postUser = createAsyncThunk(
 			// dispatch(setUser(data.user))
 			return data;
 		} catch (error) {
+      // let errString = ''
+      // for (let key in error.errors) {
+      //   errString += `${key} ${error[key]}`
+      // }
+      // for(let key in error) {
+      //   console.log(key + ":", objA[key]);
+      // }
+      // console.log('errString', errString)
 			console.log('error.message', error.message);
+			// return rejectWithValue(errString);
 			return rejectWithValue(error.message);
 		}
 	}
@@ -155,7 +170,7 @@ const userSlice = createSlice({
 		},
 		[postUser.rejected]: (state, action) => {
 			console.log('postUser.rejected');
-			// console.log('postUser.rejected ACTION', action)
+			console.log('postUser.rejected ACTION', action)
       state.status = 'rejected';
       state.error = action.payload;
 			// state.status = false;

@@ -21,9 +21,9 @@ function Layout() {
         >
           <Button className={style['green-btn']}>Create article</Button>
         </Link>
-        <div className={style['profile']}>
-          <Link to="/profile">
-            <p className={style['username']}>{username}</p>
+        <div className={style['profile-wrapper']}>
+          <Link to="/profile" className={style['username']}>
+            <p >{username}</p>
           </Link>
 					<img className={style['avatar']} alt="avatar" src={image} />
         </div>
@@ -32,7 +32,6 @@ function Layout() {
         >
           <Button className={style['log-out']}
                   onClick={() => dispatch(logOut())}
-                  // onClick={() => console.log('click')}
           >Log Out</Button>
         </Link>
       </div>

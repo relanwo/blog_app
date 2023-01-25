@@ -45,6 +45,7 @@
 
 .wrapper {
   display: flex;
+  align-items: center;
 }
 
 .log-out {
@@ -52,19 +53,26 @@
   // padding: 18px;
 }
 
+.profile-wrapper {
+  display: flex;
+  margin: 0 26px;
+}
+
 .username {
+  /* H6 - Header 6 */
+  font-family: 'Inter UI';
   font-size: 18px;
   line-height: 28px;
-  // display: flex;
-  // align-items: center;
+  /* @heading-color */
   color: rgba(0, 0, 0, 0.85);
-  margin: 0;
+
+  text-decoration: none;
 }
 
 .avatar {
   width: 46px;
   height: 46px;
-  // background: url(image.png);
-  margin-left: 12px;
   border-radius: 100%;
+  margin: auto;
+  margin-left: 12px;
 }
