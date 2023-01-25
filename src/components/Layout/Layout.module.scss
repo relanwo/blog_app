@@ -26,7 +26,7 @@
   color: rgba(0, 0, 0, 0.85);
 }
 
-.sign-up {
+.green-btn {
   /* @success-color */
   color: #52C41A;
 }
@@ -41,4 +41,30 @@
 
 .error {
   height: 55px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.log-out {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  // padding: 18px;
+}
+
+.username {
+  font-size: 18px;
+  line-height: 28px;
+  // display: flex;
+  // align-items: center;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  // background: url(image.png);
+  margin-left: 12px;
+  border-radius: 100%;
 }

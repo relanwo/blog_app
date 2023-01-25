@@ -7,7 +7,7 @@ import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 function SingleArticlePage() {
-	console.log('useParams', useParams());
+	// console.log('useParams', useParams());
 	const { slug } = useParams();
 
 	const articles = useSelector((state) => {
@@ -28,7 +28,7 @@ function SingleArticlePage() {
 		return element;
 	}, [element]);
 
-	console.log('params', params);
+	// console.log('params', params);
 	return (
 		<>
 			<Post data={params} showBody={true} />

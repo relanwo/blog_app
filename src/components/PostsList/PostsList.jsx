@@ -22,7 +22,7 @@ export default function PostsList() {
 	const dispatch = useDispatch();
 
 	const articles = useSelector((state) => {
-		console.log('articles state>', state.articles.articles);
+		// console.log('articles state>', state.articles.articles);
 		if (state.articles.articles) {
 			const { articles } = state.articles.articles;
 			return articles;
@@ -52,6 +52,7 @@ export default function PostsList() {
 
 	// console.log(arr)
 	useEffect(() => {
+    // localStorage.clear();
 		dispatch(fetchArticles(memoArr));
 	}, [dispatch, memoArr]);
 

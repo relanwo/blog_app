@@ -9,25 +9,47 @@ import CustomPagination from '../CustomPagination/CustomPagination';
 import Post from '../Post/Post';
 import SingleArticlePage from '../pages/SingleArticlePage';
 
-import { Routes, Route, Link, Redirect } from 'react-router-dom';
+import { Routes, Route, Link, Redirect, Navigate } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Layout from '../Layout/Layout';
-import SignInPage from '../pages/LoginPage';
-import SignUpPage from '../pages/RegisterPage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import Profile from '../Profile/Profile';
+
+import RequireAuth from '../hoc/RequireAuth';
+import SignIn from '../SignIn/SignIn';
+
 const { Header, Content, Footer } = AntdLayout;
 
 function App() {
+  // useEffect(() => {
+  //   localStorage.clear(); //потоом буду удалять при логауте
+	// }, []);
+  const isAuth = useSelector((state) => state.user.isAuth)
 	return (
 		<div className={style['app']}>
 			<Routes>
 				<Route path="/" element={<Layout />}>
-        <Route index element={<MainPage />} />
-        <Route path="articles" element={<MainPage />} />
+        {/* <Route index element={() => (!isAuth ? <SignIn /> : <Navigate to="/posts" />)<MainPage />} /> */}
+        {/* <Route index element={<MainPage />} /> */}
+        <Route index element={
+          <RequireAuth>
+            <MainPage />
+          </RequireAuth>
+        } />
+        <Route path="articles" element={<Navigate to='/' replace />} /> {/* чтобы не сохр /articles в истории посещений, добавляем replace */}
+        {/* <Route path="articles" element={<MainPage />} /> */}
         <Route path="articles/:slug" element={<SingleArticlePage />} />
-        <Route path="sign-in" element={<SignInPage />} />
-        <Route path="sign-up" element={<SignUpPage />} />
-        {/* <Route path="profile " element={<MainPage />} /> */}
+        {/* <Route path="sign-in" element={() => (!isAuth ? <SignIn /> : <Navigate to="/" />)} /> */}
+        <Route path="sign-in" element={<SignIn />} />
+        {/* <Route path="sign-in" element={<LoginPage />} /> */}
+        <Route path="sign-up" element={<RegisterPage />} />
+        <Route path="profile" element={
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        } />
         <Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>

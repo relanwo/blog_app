@@ -6,7 +6,7 @@ import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SignUp from '../SignUp/SignUp';
 
-function SignUpPage() {
+function RegisterPage() {
 	// console.log('useParams', useParams())
 	// const { slug } = useParams();
 
@@ -37,4 +37,4 @@ function SignUpPage() {
 	// return <h2>{slug}</h2>
 }
 
-export default SignUpPage;
+export default RegisterPage;

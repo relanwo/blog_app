@@ -7,11 +7,22 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import style from './SignIn.module.scss';
-import { Button, Form, Input, message, Space, Title } from 'antd';
+import { Button, Form, Input, message, Space, Title, Alert } from 'antd';
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from 'react-router-dom';
+import {loginUser} from '../../store/user-slice'
 
 function SignIn() {
-  // const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/';
+  console.log(location)
+
+  const isAuth = useSelector((state) => state.user.isAuth)
+
   const { 
     register, //для регистрации полей формы
     handleSubmit, // обёртка над нашим хэндлером отправки формы
@@ -22,13 +33,19 @@ function SignIn() {
     mode: "onChange"
    });
 
+  const a ='/articles'
   const onSubmit = data => {
-    alert(JSON.stringify(data))
-    reset()
+    // const {rep_password, ...clearData} = data
+    dispatch(loginUser(data));
+    // isAuth && navigate(fromPage)
+    // navigate(a)
+    // alert(JSON.stringify(data))
+    // reset()
   };
 
 	return (
     <>
+    {fromPage}
       <form 
         onSubmit={handleSubmit(onSubmit)}
         className={style['form']}
@@ -71,6 +88,9 @@ function SignIn() {
         <div className={style['underbutton-text']}>
           Don’t have an account? <Link className={style['link']} to="/sign-up">Sign Up</Link>.
         </div>
+
+      {error!==null && <Alert className={'error'} message={error} type="error" showIcon />}
+
       </form>
     </>
 		// <Form 

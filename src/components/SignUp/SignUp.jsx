@@ -5,12 +5,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import style from './SignUp.module.scss';
-import { Button, Form, Input, message, Space, Title, Checkbox, Divider } from 'antd';
+import { Button, Form, Input, message, Space, Title, Checkbox, Divider, Alert } from 'antd';
 import { useForm } from "react-hook-form";
-import { setUser, removeUser } from '../../store/user-slice'
+import { setUser, removeUser, postUser } from '../../store/user-slice'
 
 function SignUp() {
   const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.user);
 
   const { 
     register, //для регистрации полей формы
@@ -24,7 +25,9 @@ function SignUp() {
 
   const onSubmit = data => {
     // alert(JSON.stringify(data))
-    dispatch(setUser(data))
+    const {rep_password, ...clearData} = data
+    dispatch(postUser(clearData))
+    // dispatch(postUser(JSON.stringify(clearData)))
     reset()
   };
 
@@ -125,6 +128,9 @@ function SignUp() {
         <div className={style['underbutton-text']}>
 		 		  Already have an account? <Link className={style['link']} to="/sign-in">Sign In</Link>.
 		 	  </div>
+
+      {error!==null && <Alert className={'error'} message={error} type="error" showIcon />}
+
       </form>
     </>
 		// <Form className={style['form']} layout="vertical">

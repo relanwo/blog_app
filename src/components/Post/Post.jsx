@@ -12,7 +12,7 @@ import ReactMarkdown from 'react-markdown';
 const { Header, Content, Sider } = Layout;
 
 export default function Post({ data, showBody }) {
-	console.log(showBody);
+	// console.log('showBody',showBody);
 	const dispatch = useDispatch();
 
 	const {
