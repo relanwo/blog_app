@@ -4,33 +4,40 @@ import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 export const postUser = createAsyncThunk(
 	'user/postUser',
 	async function (arr, { rejectWithValue, dispatch }) {
-		try {
-			const response = await fetch('https://blog.kata.academy/api/users', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json;charset=utf-8',
-				},
-				// body: JSON.stringify(arr),
-				body: JSON.stringify({ user: arr }),
-			});
-      console.log('response', response)
-      // console.log('token', response.body.user.token)
-      // relanwo@gmail.com
+    const response = await fetch('https://blog.kata.academy/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      // body: JSON.stringify(arr),
+      body: JSON.stringify({ user: arr }),
+    });
+    console.log('response', response)
+    const data = await response.json();
+    console.log('data', data)
+    // relanwo@gmail.com
+    // try {
+
       if (response.status === 422) {
-        // const errors = await response.json();
-        // console.log('response.body', await response.json())
-        throw new Error(JSON.stringify(await response.json()))
-      }
-			if (!response.ok) {
-				throw new Error("Can't create a user. Server Error");
+				// throw new Error("Can't create a user. Server Error");
+        // return rejectWithValue(data);
+        return rejectWithValue(JSON.stringify(data));
 			}
-			const data = await response.json();
-			console.log('data', data)
+      // if (response.status === 422) {
+      //   // const errors = await response.json();
+      //   // console.log('response.body', await response.json())
+      //   throw new Error(JSON.stringify(data))
+      // }
+			// eslint-disable-next-line no-unreachable
+			// if (!response.ok) {
+			// 	throw new Error("Can't create a user. Server Error");
+			// }
+			// console.log('data', data)
 
 			// if (!localStorage.getItem('token')) localStorage.setItem('token', data.user.token)
 			// dispatch(setUser(data.user))
 			return data;
-		} catch (error) {
+		// } catch (error) {
       // let errString = ''
       // for (let key in error.errors) {
       //   errString += `${key} ${error[key]}`
@@ -39,17 +46,17 @@ export const postUser = createAsyncThunk(
       //   console.log(key + ":", objA[key]);
       // }
       // console.log('errString', errString)
-			console.log('error.message', error.message);
-			// return rejectWithValue(errString);
-			return rejectWithValue(error.message);
-		}
+		// 	console.log('error.message', error.message);
+		// 	// return rejectWithValue(errString);
+		// 	return rejectWithValue(error.message);
+		// }
 	}
 );
 
 export const loginUser = createAsyncThunk(
 	'user/postUser',
 	async function (arr, { rejectWithValue, dispatch }) {
-		try {
+		// try {
 			const response = await fetch('https://blog.kata.academy/api/users/login', {
 				method: 'POST',
 				headers: {
@@ -60,20 +67,25 @@ export const loginUser = createAsyncThunk(
 			});
       console.log('response', response)
   //     // console.log('token', response.body.user.token)
-			if (!response.ok) {
-				throw new Error("Can't create a user. Server Error");
+			if (response.status === 403) {
+				// throw new Error("Can't create a user. Server Error");
+        return rejectWithValue('You put wrong data');
+			}
+      if (response.status === 422) {
+				// throw new Error("Can't create a user. Server Error");
+        return rejectWithValue('Some server error. Please, try again.');
 			}
 			const data = await response.json();
 			console.log('data', data)
 
 			// if (!localStorage.getItem('user')) localStorage.setItem('user',  JSON.stringify(data.user))
-			// if (!localStorage.getItem('token')) localStorage.setItem('token', data.user.token)
+			if (!localStorage.getItem('token')) localStorage.setItem('token', data.user.token)
 			dispatch(setUser(data.user))
 			return data;
-		} catch (error) {
-			console.log('error.message', error.message);
-			return rejectWithValue(error.message);
-		}
+		// } catch (error) {
+			// console.log('error.message', error.message);
+			// return rejectWithValue(error.message);
+		// }
 	}
 );
 
@@ -81,10 +93,10 @@ export const updateUser = createAsyncThunk(
 	'user/postUser',
 	async function (arr, { rejectWithValue, dispatch }) {
 		try {
-			const response = await fetch('https://blog.kata.academy/api/users/login', {
+			const response = await fetch('https://blog.kata.academy/api/user', {
 				method: 'PUT',
 				headers: {
-          'Authorization': `Token ${arr.token}`,
+          'Authorization': `Token ${localStorage.getItem('token')}`,
 					'Content-Type': 'application/json;charset=utf-8',
 				},
 				// body: JSON.stringify(arr),
@@ -97,9 +109,6 @@ export const updateUser = createAsyncThunk(
 			}
 			const data = await response.json();
 			console.log('data', data)
-
-			// if (!localStorage.getItem('user')) localStorage.setItem('user',  JSON.stringify(data.user))
-			// if (!localStorage.getItem('token')) localStorage.setItem('token', data.user.token)
 			dispatch(setUser(data.user))
 			return data;
 		} catch (error) {
@@ -135,6 +144,8 @@ const userSlice = createSlice({
 			state.image = action.payload.image;
 			state.token = action.payload.token;
 
+      state.status = null;
+			state.error = null;
 			// state.id = action.payload.id
 			console.log('setUser STATE >', current(state));
 		},
@@ -146,6 +157,9 @@ const userSlice = createSlice({
 			state.bio = null;
 			state.image = null;
 			state.token = null;
+
+      state.status = null;
+			state.error = null;
       console.log('logOut STATE >', current(state));
 		},
 		// changePage(state, action) {
@@ -170,9 +184,21 @@ const userSlice = createSlice({
 		},
 		[postUser.rejected]: (state, action) => {
 			console.log('postUser.rejected');
-			console.log('postUser.rejected ACTION', action)
+			console.log('postUser.rejected ACTION.payload', action.payload)
       state.status = 'rejected';
-      state.error = action.payload;
+      
+      function errorTransformer(error) {
+        let errString = ''
+        for (let i in error) {
+          const nerror = error[i]
+          // errString += `${i} ${error[i]}.`
+          for (let j in nerror) {
+            errString += `${j} ${nerror[j]}. `
+          }
+        }
+        return errString
+      }
+      state.error = errorTransformer(JSON.parse(action.payload));
 			// state.status = false;
 		},
 	},

@@ -17,16 +17,31 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session'
 
-const rootReducer = combineReducers({
-    articles: articleReducer,
-    user: userReducer,
-    // pagination: paginationReducer
-  })
+
 
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['user']
 };
+
+const userConfig = {
+  key: 'user',
+  storage,
+  blacklist: ['error', 'status']
+};
+// const rootReducer = combineReducers({
+//   tracking: persistReducer(trackingConfig, trackingReducer),
+// })
+
+// export default persistReducer(persistConfig, rootReducer)
+
+const rootReducer = combineReducers({
+  articles: articleReducer,
+  // user: userReducer,
+  user: persistReducer(userConfig, userReducer),
+  // pagination: paginationReducer
+})
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

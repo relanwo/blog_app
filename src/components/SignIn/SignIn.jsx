@@ -19,7 +19,7 @@ function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '/';
-  console.log(location)
+  // console.log(location)
 
   const isAuth = useSelector((state) => state.user.isAuth)
 
@@ -37,6 +37,7 @@ function SignIn() {
   const onSubmit = data => {
     // const {rep_password, ...clearData} = data
     dispatch(loginUser(data));
+    // if (data) navigate('/')
     // isAuth && navigate(fromPage)
     // navigate(a)
     // alert(JSON.stringify(data))
@@ -45,7 +46,7 @@ function SignIn() {
 
 	return (
     <>
-    {fromPage}
+    {/* {fromPage} */}
       <form 
         onSubmit={handleSubmit(onSubmit)}
         className={style['form']}

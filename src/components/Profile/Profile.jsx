@@ -103,7 +103,7 @@ const Profile = () => {
       <label className={style['wrapper']}>
       Avatar image (url)
         <input
-          {...register("avatar_image", {
+          {...register("image", {
             // required: "Password field can't be blank",
             pattern: {
               // eslint-disable-next-line no-useless-escape
@@ -112,11 +112,11 @@ const Profile = () => {
             }
           })}
           className={style['input']} placeholder="Avatar image (url)"
-          style={{border: errors.avatar_image ? '1px solid red' : '' }}
+          style={{border: errors.image ? '1px solid red' : '' }}
         />
       </label>
       <div>
-        {errors.avatar_image && <p className={style['error']}>{errors.avatar_image.message || "Some error"}</p>}
+        {errors.image && <p className={style['error']}>{errors.image.message || "Some error"}</p>}
       </div>
 
       <button className={style['button']}

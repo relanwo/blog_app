@@ -124,19 +124,20 @@ function SignUp() {
           // for='check'
           className={style['checkbox']} 
           {...register("checkbox", {
-            // required: "Password field can't be blank",
+            required: "checkbox must be checked",
           })}
+          style={{color: errors.checkbox ? 'red' : '' }}
         >
           <input type="checkbox" 
           // id="check"
-          // defaultChecked 
+          defaultChecked 
           />
           I agree to the processing of my personal information
         </label>
 
         <button className={style['button']}
           type="submit"
-          // disabled={!isValid}
+          disabled={!isValid}
         >
           Create
         </button>

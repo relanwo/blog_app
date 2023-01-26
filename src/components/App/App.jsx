@@ -42,8 +42,8 @@ function App() {
         {/* <Route path="articles" element={<MainPage />} /> */}
         <Route path="articles/:slug" element={<SingleArticlePage />} />
         {/* <Route path="sign-in" element={() => (!isAuth ? <SignIn /> : <Navigate to="/" />)} /> */}
-        <Route path="sign-in" element={<SignIn />} />
-        {/* <Route path="sign-in" element={<LoginPage />} /> */}
+        {/* <Route path="sign-in" element={<SignIn />} /> */}
+        <Route path="sign-in" element={<LoginPage />} />
         <Route path="sign-up" element={<RegisterPage />} />
         <Route path="profile" element={
           <RequireAuth>

@@ -3,17 +3,23 @@ import reactMarkdown from "react-markdown";
 import { useLocation, Navigate, useNavigate } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
+import { logOut, setUser } from "../../store/user-slice";
 
 const RequireAuth = ({children}) => {
   const location = useLocation();
   const isAuth = useSelector((state) => state.user.isAuth)
   
+  const dispatch = useDispatch();
   // useEffect(() => {
-    if (!isAuth) {
-      return <Navigate to='/sign-in' state={{from: location}}/>
-    }
-    return children
-  // }, [children, isAuth, location])
+  //   // dispatch(setUser())
+  //   // dispatch(logOut())
+  //   isAuth
+  // }, [isAuth])
+
+  if (!isAuth) {
+    return <Navigate to='/sign-in' state={{from: location}}/>
+  }
+  return children
     
 
   // const store = useSelector((state) => state)
