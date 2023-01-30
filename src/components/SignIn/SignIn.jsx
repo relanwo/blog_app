@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import style from './SignIn.module.scss';
 import { Button, Form, Input, message, Space, Title, Alert } from 'antd';
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 
 function SignIn() {
@@ -38,8 +38,8 @@ function SignIn() {
     // const {rep_password, ...clearData} = data
     dispatch(loginUser(data));
     // if (data) navigate('/')
-    // isAuth && navigate(fromPage)
-    // navigate(a)
+    // if (isAuth) navigate(a)
+    navigate(a)
     // alert(JSON.stringify(data))
     // reset()
   };

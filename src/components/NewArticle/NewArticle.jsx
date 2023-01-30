@@ -12,18 +12,34 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 import uniqid from 'uniqid';
-import {setCreatedTag, deleteChosenTag, postNewArticle, setTagChange} from '../../store/article-slice'
+import {setCreatedTag, deleteChosenTag, postNewArticle, setTagChange, getArticleData} from '../../store/article-slice'
 
-function SignIn() {
+function NewArticle() {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const fromPage = location.state?.from?.pathname || '/';
-  // console.log(location)
 
-  const isAuth = useSelector((state) => state.user.isAuth)
+  const editOrNewParam = location.pathname
+  useEffect(() => {
+    if (editOrNewParam !== '/new-article') {
+      dispatch(getArticleData(editOrNewParam.slice(10, -5)))
+    }
+  }, [dispatch, editOrNewParam])
+  // const article = useSelector((state) => state.user.article)
+  const article = useSelector((state) => {
+		// console.log('articles state>', state.articles.articles);
+		if (state.articles.article) {
+			const { article } = state.articles.article;
+			return article;
+		} else {
+			return [];
+		}
+	});
+  console.log('editOrNewParam', editOrNewParam)
+
+  // const isAuth = useSelector((state) => state.user.isAuth)
   const storeTags = useSelector((state) => state.articles.tagList)
   console.log('storeTags',storeTags)
 
@@ -74,6 +90,30 @@ function SignIn() {
 	// 	)
 	// 	// localStorage.setItem('tags', newData)
 	// }
+  console.log(article.tagList)
+  // const mapTags = (arrOfTags) => {
+  //   if (arrOfTags !== undefined) {
+  //     arrOfTags.map((el, i) => {
+  //       return (
+  //         <li className={style['tag']} key={el.id}>
+  //         <input className={style['tags-input']} 
+  //           defaultValue={el.content} 
+  //           // value={value} 
+  //           // onChange={onChange}
+  //           onChange={(e) =>
+  //             dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+  //           }
+  //         />
+  //         <Button 
+  //           className={style['delete-button']} 
+  //           onClick={() => deleteTag(el.id)}
+  //           >Delete</Button>
+  //         </li>
+  //       );
+  //     })
+  //   }
+  // }
+
   let tags
   if (storeTags !== undefined) {
     tags = storeTags.map((el, i) => {
@@ -105,54 +145,6 @@ function SignIn() {
     })
   }
 
-  // const createTag = () => {
-	// 	const id = uniqid()
-	// 	const item = { id, content: '' }
-	// 	dispatch(setCreatedTag(item))
-	// 	// const newData = JSON.stringify([...articles.tags, item])
-	// 	// localStorage.setItem('tags', newData)
-	// }
-
-	// const deleteTag = (id) => {
-	// 	// dispatch(setDeletedTag(id))
-	// 	const newData = JSON.stringify(
-	// 		// [...articles.tags].filter((el) => el.id !== id)
-	// 	)
-	// 	// localStorage.setItem('tags', newData)
-	// }
-
-	// const tags = articles.tags.map((el, i) => {
-	// 	return (
-	// 		<div className='tags' key={el.id}>
-	// 			<input
-	// 				// className={classes['input-tag']}
-	// 				onChange={(e) =>
-	// 					// dispatch(setTagChange({ id: el.id, content: e.target.value }))
-  //           console.log(e)
-  //         }
-	// 				placeholder='Tag'
-	// 				// defaultValue={articles.tags[i].content}
-	// 			/>
-	// 			<button
-	// 				type='button'
-	// 				// className={
-	// 					// articles.tags.length === 1
-	// 						// ? `${classes['tag-button-delete']} ${classes['inactive']}`
-	// 						// : classes['tag-button-delete']
-	// 				// }
-	// 				onClick={(e) =>
-  //           console.log(e)
-	// 					// e.target.className == classes['tag-button-delete']
-	// 					// 	? deleteTag(el.id)
-	// 					// 	: null
-	// 				}
-	// 			>
-	// 				delete
-	// 			</button>
-	// 		</div>
-	// 	)
-	// })
-
 	return (
     <>
     {/* {fromPage} */}
@@ -160,7 +152,12 @@ function SignIn() {
         onSubmit={handleSubmit(onSubmit)}
         className={style['form']}
       >
-      <p className={style['title']}>Create new article</p>
+      <p className={style['title']}>
+        {editOrNewParam === '/new-article'
+          ? 'Create new article'
+          : 'Edit article'}
+        {/* // Create new article */}
+      </p>
         <label className={style['wrapper']}>
           Title
           <input
@@ -169,6 +166,7 @@ function SignIn() {
             })}
             className={style['input']} placeholder="Title"
             style={{border: errors.title ? '1px solid red' : '' }}
+            value={editOrNewParam !== '/new-article' && article.title !==undefined ? article.title : ''}
           />
         </label>
         <div>
@@ -183,6 +181,7 @@ function SignIn() {
             })}
             className={style['input']} placeholder="Description"
             style={{border: errors.description ? '1px solid red' : '' }}
+            value={editOrNewParam !== '/new-article' && article.description ? article.description : ''}
           />
         </label>
         <div>
@@ -198,6 +197,7 @@ function SignIn() {
             rows={11}
             className={style['input']} placeholder="Text"
             style={{border: errors.body ? '1px solid red' : '' }}
+            value={editOrNewParam !== '/new-article' && article.body ? article.body : ''}
           ></textarea >
         </label>
         <div>
@@ -208,16 +208,19 @@ function SignIn() {
           Tags
         </label>
         <ul className={style['tag-wrapper']}
-                    {...register("tags", {
-                      required: "At least one tag is required"
-                    })}>
+          {...register("tags", {
+            required: "At least one tag is required"
+          })}>
           {tags}
+          {/* {editOrNewParam !== '/new-article'
+            ? mapTags(article.tagList)
+            : mapTags(storeTags)
+          } */}
             
          <li className={style['tag']}>
           <input className={style['tags-input']} 
             value={value} 
             onChange={onChange}
-
           />
           <Button 
             className={style['delete-button']} 
@@ -231,35 +234,6 @@ function SignIn() {
          <div>
           {errors.tag && <p className={style['error']}>{errors.tag.message}</p>}
           </div>
-        {/* {storeTags.map((item, index) => (
-          <li key={item.id} className={style['tagwrapper']}>
-            <input
-              // {...register(`${name}.${index}.tagName`, { required })}
-              // className={errors[name]?.[index]?.tagName && styles.inputError}
-              className={style['tags-input']}
-            />
-            <div className={style['buttonwrapper']}>
-              <Button 
-                // className={styles.button} 
-                className={style['delete-button']} 
-                ghost danger 
-                // onClick={() => remove(index)}
-                >
-                Delete
-              </Button>
-              {/* {storeTags.length - 1 === index && (
-                <Button 
-                  // className={styles.button} 
-                  className={style['add-button']} 
-                  ghost type="primary" 
-                  // onClick={() => append({})}
-                  >
-                  Add tag
-                </Button>
-              // )} */}
-            {/* </div> */}
-          {/* </li> */}
-        {/* ))} */}
         </ul>
 
         <button className={style['button']}
@@ -274,4 +248,4 @@ function SignIn() {
 	);
 }
 
-export default SignIn;
+export default NewArticle;

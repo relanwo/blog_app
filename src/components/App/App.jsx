@@ -42,6 +42,8 @@ function App() {
         <Route path="articles" element={<Navigate to='/' replace />} /> {/* чтобы не сохр /articles в истории посещений, добавляем replace */}
         {/* <Route path="articles" element={<MainPage />} /> */}
         <Route path="articles/:slug" element={<SingleArticlePage />} />
+        <Route path="articles/:slug/edit" element={<NewArticlePage />} />
+        {/* `/articles/${slug}/edit` */}
         {/* <Route path="sign-in" element={() => (!isAuth ? <SignIn /> : <Navigate to="/" />)} /> */}
         {/* <Route path="sign-in" element={<SignIn />} /> */}
         <Route path="sign-in" element={<LoginPage />} />

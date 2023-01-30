@@ -32,7 +32,7 @@ const userConfig = {
 const articleConfig = {
   key: 'articles',
   storage,
-  blacklist: ['tagList', 'error', 'status']
+  blacklist: ['tagList', 'error', 'status', 'article']
 };
 
 const rootReducer = combineReducers({

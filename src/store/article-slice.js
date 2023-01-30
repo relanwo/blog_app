@@ -73,6 +73,28 @@ export const deleteArticle = createAsyncThunk(
 	}
 );
 
+export const getArticleData = createAsyncThunk(
+	'user/deleteArticle',
+	async function (slug, { rejectWithValue, dispatch }) {
+		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+			method: 'GET',
+			// headers: {
+			// 	Authorization: `Token ${localStorage.getItem('token')}`,
+			// 	'Content-Type': 'application/json;charset=utf-8',
+			// },
+			// body: JSON.stringify({ article: arr }),
+		});
+		console.log('response', response);
+		if (response.status === 422) {
+			return rejectWithValue('Some server error. Please, try again.');
+		}
+		const data = await response.json();
+		console.log('data', data);
+		// dispatch(setUser(data.user))
+		return data;
+	}
+);
+
 const articleSlice = createSlice({
 	name: 'articles',
 	initialState: {
@@ -82,6 +104,8 @@ const articleSlice = createSlice({
 		page: 1,
 		pageSize: 20,
 		tagList: [],
+
+    article: null
 	},
 	reducers: {
 		// getArticles(state, action) {
@@ -155,6 +179,27 @@ const articleSlice = createSlice({
 			state.articles = action.payload;
 		},
 		[fetchArticles.rejected]: (state, action) => {
+			console.log('fetchArticles.rejected');
+			console.log('ACTION', action);
+
+			state.status = 'rejected';
+			state.error = action.payload;
+			// state.articles = []
+		},
+    [getArticleData.pending]: (state, action) => {
+			console.log('fetchArticles.pending');
+			// console.log('ACTION', action)
+			state.status = 'loading';
+			// state.articles = []
+		},
+		[getArticleData.fulfilled]: (state, action) => {
+			console.log('fetchArticles.fulfilled');
+			console.log('ACTION', action);
+			state.status = 'resolved';
+			state.article = action.payload;
+      console.log('state.article', state.article)
+		},
+		[getArticleData.rejected]: (state, action) => {
 			console.log('fetchArticles.rejected');
 			console.log('ACTION', action);
 

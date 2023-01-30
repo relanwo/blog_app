@@ -78,9 +78,13 @@ export default function Post({ data, showBody }) {
                 placement={'right'}
                 onConfirm={confirm}
               >
-                <Button className={style['red-btn']} >Delete</Button>
+                <Button className={style['red-btn']}>Delete</Button>
               </Popconfirm>
-              <Button className={style['green-btn']}>Edit</Button>
+              <Button 
+                className={style['green-btn']}
+                // onClick={navigate(`/articles/${slug}/edit`)}
+                onClick={() => navigate(`/articles/${slug}/edit`)}
+              >Edit</Button>
               </div>
             ) : null}
           </div>
