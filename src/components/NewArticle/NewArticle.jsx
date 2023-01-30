@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 import uniqid from 'uniqid';
-import {setCreatedTag, deleteTag, postNewArticle, setTagChange} from '../../store/article-slice'
+import {setCreatedTag, deleteChosenTag, postNewArticle, setTagChange} from '../../store/article-slice'
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -24,11 +24,12 @@ function SignIn() {
   // console.log(location)
 
   const isAuth = useSelector((state) => state.user.isAuth)
-  const storeTags = useSelector((state) => state.articles.tags)
+  const storeTags = useSelector((state) => state.articles.tagList)
   console.log('storeTags',storeTags)
 
   const [value, setValue] = useState('');
 
+  // const onChange = (event) => console.log(event.target.value);
   const onChange = (event) => setValue(event.target.value);
 
   const { 
@@ -57,6 +58,7 @@ function SignIn() {
     // navigate(a)
     // alert(JSON.stringify(data))
     // reset()
+    navigate('/', {replace: true})
   };
 
   const addTag = (value) => {
@@ -66,7 +68,7 @@ function SignIn() {
     dispatch(setCreatedTag(item))
     setValue('')
   }
-  const deleteTag = (id) => dispatch(deleteTag(id))
+  const deleteTag = (id) => dispatch(deleteChosenTag(id))
 	// 	const newData = JSON.stringify(
 	// 		// [...articles.tags].filter((el) => el.id !== id)
 	// 	)
@@ -74,24 +76,24 @@ function SignIn() {
 	// }
   let tags
   if (storeTags !== undefined) {
-    tags = storeTags.map((el, id) => {
+    tags = storeTags.map((el, i) => {
       // if (storeTags.length === 0) {
-      //   return []
+      //   return ()
       // }
         return (
           <li className={style['tag']} key={el.id}>
           <input className={style['tags-input']} 
             defaultValue={el.content} 
-            value={value} 
-            onChange={onChange}
-            // onChange={(e) =>
-            //   dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
-            // }
+            // value={value} 
+            // onChange={onChange}
+            onChange={(e) =>
+              dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+            }
           />
           <Button 
             className={style['delete-button']} 
-            // onClick={(id) => console.log('delete el', id)}
-            // onClick={(el.id) => deleteTag(el.id)}
+            // onClick={() => console.log('delete el', el.id)}
+            onClick={() => deleteTag(el.id)}
             >Delete</Button>
           {/* <Button 
             className={style['add-button']} 
@@ -164,10 +166,6 @@ function SignIn() {
           <input
             {...register("title", {
               required: "Title field can't be blank",
-              // pattern: {
-              //   value: /^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/u,
-              //   message: "Email is not valid"
-              // }
             })}
             className={style['input']} placeholder="Title"
             style={{border: errors.title ? '1px solid red' : '' }}
@@ -194,35 +192,36 @@ function SignIn() {
         <label className={style['wrapper']}>
           Text
           <textarea 
-            {...register("text", {
+            {...register("body", {
               required: "Text field can't be blank"
             })}
             rows={11}
             className={style['input']} placeholder="Text"
-            style={{border: errors.text ? '1px solid red' : '' }}
+            style={{border: errors.body ? '1px solid red' : '' }}
           ></textarea >
         </label>
         <div>
-          {errors.text && <p className={style['error']}>{errors.text.message}</p>}
+          {errors.body && <p className={style['error']}>{errors.body.message}</p>}
         </div>
 
         <label className={style['wrapper']}>
           Tags
         </label>
-        <ul className={style['tag-wrapper']}>
+        <ul className={style['tag-wrapper']}
+                    {...register("tags", {
+                      required: "At least one tag is required"
+                    })}>
           {tags}
             
          <li className={style['tag']}>
           <input className={style['tags-input']} 
             value={value} 
             onChange={onChange}
-            {...register("tag", {
-              required: "At least one tag is required"
-            })}
+
           />
           <Button 
             className={style['delete-button']} 
-            onClick={() => console.log('delete')}
+            // onClick={() => console.log('delete')}
             >Delete</Button>
           <Button 
             className={style['add-button']} 
@@ -263,25 +262,12 @@ function SignIn() {
         {/* ))} */}
         </ul>
 
-          {/* <textarea 
-            {...register("text", {
-              // required: "Password field can't be blank"
-            })}
-            className={style['input']} placeholder="Text"
-            style={{border: errors.text ? '1px solid red' : '' }}
-          ></textarea > */}
-        {/* <div>
-          {errors.description && <p className={style['error']}>{errors.password.message}</p>}
-        </div> */}
-
         <button className={style['button']}
           type="submit"
           disabled={!isValid}
         >
           Send
         </button>
-
-      {/* {error!==null && <Alert className={'error'} message={error} type="error" showIcon />} */}
 
       </form>
     </>

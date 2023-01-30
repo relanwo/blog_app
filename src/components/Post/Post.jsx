@@ -1,19 +1,23 @@
 /* eslint-disable no-unused-vars */
 import style from './Post.module.scss';
-import { Card, Layout } from 'antd';
+import { Card, Layout, Button, Popconfirm } from 'antd';
 // console.log(style)
 import { format } from 'date-fns';
 import uniqid from 'uniqid';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSlug } from '../../store/article-slice';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import {deleteArticle} from '../../store/article-slice';
 
 const { Header, Content, Sider } = Layout;
 
 export default function Post({ data, showBody }) {
+  const navigate = useNavigate();
 	// console.log('showBody',showBody);
 	const dispatch = useDispatch();
+  const storageUsername = useSelector((state) => state.user.username)
 
 	const {
 		slug,
@@ -33,6 +37,11 @@ export default function Post({ data, showBody }) {
 			'MMMM d, y'
 		);
 	};
+  const confirm = () => {
+    console.log('confirm slug', slug)
+    dispatch(deleteArticle(slug))
+    navigate('/', {replace: true})
+  }
 
 	return (
 		<div className={style['card']}>
@@ -54,11 +63,27 @@ export default function Post({ data, showBody }) {
 					<p className={style['description']}>{description}</p>
 				</Content>
 				<Sider className={style['sider']}>
-					<div>
-						<p className={style['username']}>{username}</p>
-						<p className={style['createdAt']}>{dateFormater(createdAt)}</p>
-					</div>
-					<img className={style['avatar']} alt="avatar" src={image} />
+          <div className={style['sider-children']}>
+            <div className={style['wrapper-profile']}>
+              <div>
+                <p className={style['username']}>{username}</p>
+                <p className={style['createdAt']}>{dateFormater(createdAt)}</p>
+              </div>
+              <img className={style['avatar']} alt="avatar" src={image} />
+            </div>
+            {showBody && username === storageUsername ? (
+              // <ReactMarkdown className={style['body']}>{body}</ReactMarkdown>
+              <div className={style['wrapper-buttons']}>
+              <Popconfirm title="Are you sure delete this task?" okText="Yes" cancelText="No" 
+                placement={'right'}
+                onConfirm={confirm}
+              >
+                <Button className={style['red-btn']} >Delete</Button>
+              </Popconfirm>
+              <Button className={style['green-btn']}>Edit</Button>
+              </div>
+            ) : null}
+          </div>
 				</Sider>
 			</div>
 			{showBody ? (

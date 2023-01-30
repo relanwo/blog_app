@@ -54,7 +54,7 @@ export const postUser = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk(
-	'user/postUser',
+	'user/loginUser',
 	async function (arr, { rejectWithValue, dispatch }) {
 		// try {
 			const response = await fetch('https://blog.kata.academy/api/users/login', {
@@ -90,7 +90,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-	'user/postUser',
+	'user/updateUser',
 	async function (arr, { rejectWithValue, dispatch }) {
 		try {
 			const response = await fetch('https://blog.kata.academy/api/user', {

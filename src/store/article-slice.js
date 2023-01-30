@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+/* eslint-disable no-unused-vars */
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 
 export const fetchArticles = createAsyncThunk(
 	'articles/fetchArticles',
@@ -21,7 +22,7 @@ export const fetchArticles = createAsyncThunk(
 );
 
 export const postNewArticle = createAsyncThunk(
-	'user/postUser',
+	'user/postNewArticle',
 	async function (arr, { rejectWithValue, dispatch }) {
 		const response = await fetch('https://blog.kata.academy/api/articles', {
 			method: 'POST',
@@ -42,6 +43,31 @@ export const postNewArticle = createAsyncThunk(
 		console.log('data', data);
 		if (!localStorage.getItem('token'))
 			localStorage.setItem('token', data.user.token);
+		// dispatch(setUser(data.user))
+		return data;
+	}
+);
+
+export const deleteArticle = createAsyncThunk(
+	'user/deleteArticle',
+	async function (slug, { rejectWithValue, dispatch }) {
+		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Token ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			// body: JSON.stringify({ article: arr }),
+		});
+		console.log('response', response);
+		if (response.status === 401) {
+			return rejectWithValue('Unauthorized');
+		}
+		if (response.status === 422) {
+			return rejectWithValue('Some server error. Please, try again.');
+		}
+		const data = await response.json();
+		console.log('data', data);
 		// dispatch(setUser(data.user))
 		return data;
 	}
@@ -75,17 +101,19 @@ const articleSlice = createSlice({
 			// console.log('paginationSlice STATE >',state);
 			console.log('setCreatedTag ACTION >', action);
 
-			state.tags.push(action.payload);
-			// state.tags += action.payload
-			// state.tags = action.payload
+			state.tagList.push(action.payload);
+			// state.tagList += action.payload
+			// state.tagList = action.payload
 		},
-		deleteTag(state, action) {
+		deleteChosenTag(state, action) {
 			// console.log('paginationSlice STATE >',state);
-			console.log('setCreatedTag ACTION >', action);
+			console.log('deleteChosenTag ACTION >', action);
 
-			state.tags.filter((el) => el.id !== action.payload);
-			// state.tags += action.payload
-			// state.tags = action.payload
+			state.tagList = state.tagList.filter((el) => el.id !== action.payload);
+      // state.tags = state.tags.filter((el) => el.id !== action.payload)
+      console.log('tagList', state.tagList)
+			// state.tagList += action.payload
+			// state.tagList = action.payload
 		},
 		// changeSlug(state, action) {
 		//   console.log('changeSlug ACTION >',action)
@@ -137,7 +165,7 @@ const articleSlice = createSlice({
 	},
 });
 
-export const { changePage, changeSlug, setCreatedTag, deleteTag } =
+export const { changePage, changeSlug, setCreatedTag, deleteChosenTag } =
 	articleSlice.actions;
 
 export default articleSlice.reducer;

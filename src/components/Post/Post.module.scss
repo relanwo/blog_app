@@ -18,6 +18,9 @@
 
 .content {
   width: 72%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .title-link {
@@ -54,7 +57,7 @@
 }
 
 .tag-list {
-  margin: 4px 0;
+  margin: 12px 0;
 }
 
 .tag {
@@ -84,6 +87,28 @@
 .sider {
   display: flex;
   justify-content: flex-end;
+}
+
+.wrapper-profile {
+  display: flex;
+}
+.wrapper-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.green-btn {
+  /* @success-color */
+  color: #52C41A;
+  border: 1px solid #52C41A;
+  border-radius: 5px;
+}
+.red-btn {
+  /* @error-color */
+  color: #F5222D;
+  border: 1px solid #F5222D;
+  border-radius: 5px;
 }
 
 .username {
@@ -121,4 +146,4 @@
 
   /* @text-color */
   color: rgba(0, 0, 0, 0.75);
-  }
+}
