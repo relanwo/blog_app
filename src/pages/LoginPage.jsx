@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from 'react-router-dom';
-import Post from '../Post/Post';
+import Post from '../components/Post/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import SignIn from '../SignIn/SignIn';
+import SignIn from '../components/SignIn/SignIn';
 
 function LoginPage() {
 	// console.log('useParams', useParams())

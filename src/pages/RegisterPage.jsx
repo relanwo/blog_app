@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import SignUp from '../SignUp/SignUp';
+import SignUp from '../components/SignUp/SignUp';
 
 function RegisterPage() {
 	// console.log('useParams', useParams())

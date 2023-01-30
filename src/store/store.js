@@ -17,8 +17,6 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session'
 
-
-
 const persistConfig = {
   key: 'root',
   storage,
@@ -30,14 +28,16 @@ const userConfig = {
   storage,
   blacklist: ['error', 'status']
 };
-// const rootReducer = combineReducers({
-//   tracking: persistReducer(trackingConfig, trackingReducer),
-// })
 
-// export default persistReducer(persistConfig, rootReducer)
+const articleConfig = {
+  key: 'articles',
+  storage,
+  blacklist: ['tagList', 'error', 'status']
+};
 
 const rootReducer = combineReducers({
-  articles: articleReducer,
+  // articles: articleReducer,
+  articles: persistReducer(articleConfig, articleReducer),
   // user: userReducer,
   user: persistReducer(userConfig, userReducer),
   // pagination: paginationReducer

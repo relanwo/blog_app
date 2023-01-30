@@ -4,9 +4,9 @@ import { useEffect, useMemo } from 'react';
 import { Layout, Button, Spin, Alert } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import PostsList from '../PostsList/PostsList';
-import CustomPagination from '../CustomPagination/CustomPagination';
-import Post from '../Post/Post';
+import PostsList from '../components/PostsList/PostsList';
+import CustomPagination from '../components/CustomPagination/CustomPagination';
+import Post from '../components/Post/Post';
 
 import {
 	BrowserRouter as Router,

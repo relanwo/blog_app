@@ -7,15 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import PostsList from '../PostsList/PostsList';
 import CustomPagination from '../CustomPagination/CustomPagination';
 import Post from '../Post/Post';
-import SingleArticlePage from '../pages/SingleArticlePage';
+import SingleArticlePage from '../../pages/SingleArticlePage';
 
 import { Routes, Route, Link, Redirect, Navigate } from 'react-router-dom';
-import MainPage from '../pages/MainPage';
-import NotFoundPage from '../pages/NotFoundPage';
+import MainPage from '../../pages/MainPage';
+import NotFoundPage from '../../pages/NotFoundPage';
 import Layout from '../Layout/Layout';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
+import LoginPage from '../../pages/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
 import Profile from '../Profile/Profile';
+import NewArticlePage from '../../pages/NewArticlePage'
 
 import RequireAuth from '../hoc/RequireAuth';
 import SignIn from '../SignIn/SignIn';
@@ -50,6 +51,7 @@ function App() {
             <Profile />
           </RequireAuth>
         } />
+        <Route path="new-article" element={<NewArticlePage />} />
         <Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>

@@ -16,9 +16,7 @@ function Layout() {
   const header = auth 
     ? (
       <div className={style['wrapper']}>
-        <Link 
-        // to="/create-article"
-        >
+        <Link to="/new-article">
           <Button className={style['green-btn']}>Create article</Button>
         </Link>
         <div className={style['profile-wrapper']}>
