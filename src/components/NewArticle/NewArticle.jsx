@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 import uniqid from 'uniqid';
-import {setCreatedTag, deleteChosenTag, postNewArticle, setTagChange, getArticleData} from '../../store/article-slice'
+import {setCreatedTag, deleteChosenTag, postNewArticle, setTagChange, getArticleData, clearTagsList} from '../../store/article-slice'
 
 function NewArticle() {
   const dispatch = useDispatch();
@@ -69,6 +69,7 @@ function NewArticle() {
     // const {rep_password, ...clearData} = data
     console.log(data)
     dispatch(postNewArticle(data));
+    dispatch(clearTagsList())
     // if (data) navigate('/')
     // isAuth && navigate(fromPage)
     // navigate(a)
@@ -114,36 +115,48 @@ function NewArticle() {
   //   }
   // }
 
-  let tags
-  if (storeTags !== undefined) {
-    tags = storeTags.map((el, i) => {
-      // if (storeTags.length === 0) {
-      //   return ()
-      // }
-        return (
-          <li className={style['tag']} key={el.id}>
-          <input className={style['tags-input']} 
-            defaultValue={el.content} 
-            // value={value} 
-            // onChange={onChange}
-            onChange={(e) =>
-              dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
-            }
-          />
-          <Button 
-            className={style['delete-button']} 
-            // onClick={() => console.log('delete el', el.id)}
-            onClick={() => deleteTag(el.id)}
-            >Delete</Button>
-          {/* <Button 
-            className={style['add-button']} 
-             onClick={() => addTag(value)}
-            >Add Tag</Button> */}
-         </li>
-        );
-      // }
-    })
-  }
+  // let tags
+  // // if (storeTags !== undefined) {
+  //   tags = storeTags.map((el, i) => {
+  //     //   return ()
+  //     // if (storeTags.length >= 0) {
+  //       return (
+  //         <div className={style['tag']} key={el.id}>
+  //           <input 
+  //             className={style['tags-input']} 
+  //             placeholder='Tag'
+  //             defaultValue={el.content} 
+  //             // value={value} 
+  //             // onChange={onChange}
+  //             onChange={(e) =>
+  //               dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+  //             }
+  //           />
+  //           <Button 
+  //             // className={style['delete-button']} 
+  //             // onClick={() => deleteTag(el.id)}
+  //             className={
+  //               storeTags.length === 1
+  //                 ? `${style['delete-button']} ${style['inactive']}`
+  //                 : style['delete-button']
+  //             }
+  //             onClick={(e) =>
+  //               e.target.className === style['delete-button']
+  //                 ? deleteTag(el.id)
+  //                 : null
+  //             }
+  //           >
+  //             Delete
+  //           </Button>
+  //           {/* <Button 
+  //             className={style['add-button']} 
+  //             onClick={() => addTag(value)}
+  //             >Add Tag</Button> */}
+  //        </div>
+  //       );
+  //     // }
+  //   })
+  // // }
 
 	return (
     <>
@@ -167,6 +180,8 @@ function NewArticle() {
             className={style['input']} placeholder="Title"
             style={{border: errors.title ? '1px solid red' : '' }}
             value={editOrNewParam !== '/new-article' && article.title !==undefined ? article.title : ''}
+            // value}
+            // onChange={onChange}
           />
         </label>
         <div>
@@ -207,17 +222,17 @@ function NewArticle() {
         <label className={style['wrapper']}>
           Tags
         </label>
-        <ul className={style['tag-wrapper']}
+        <div className={style['tag-wrapper']}
           {...register("tags", {
             required: "At least one tag is required"
           })}>
-          {tags}
+          {/* {tags} */}
           {/* {editOrNewParam !== '/new-article'
             ? mapTags(article.tagList)
             : mapTags(storeTags)
           } */}
             
-         <li className={style['tag']}>
+         {/* <li className={style['tag']}>
           <input className={style['tags-input']} 
             value={value} 
             onChange={onChange}
@@ -225,16 +240,77 @@ function NewArticle() {
           <Button 
             className={style['delete-button']} 
             // onClick={() => console.log('delete')}
-            >Delete</Button>
-          <Button 
-            className={style['add-button']} 
-             onClick={() => addTag(value)}
-            >Add Tag</Button>
-         </li>
+            >Delete</Button> */}
+          {storeTags.map((el, i) => {
+            return (
+              <ul className={style['tag']} key={el.id}>
+                <li className={style['tag']}>
+                  <input 
+                    className={style['tags-input']} 
+                    placeholder='Tag'
+                    defaultValue={el.content} 
+                    // value={value} 
+                    // onChange={onChange}
+                    onChange={(e) =>
+                      dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+                    }
+                  />
+
+                  {/* {storeTags.length === 0 && */}
+                    <Button 
+                      // className={style['delete-button']} 
+                      // onClick={() => deleteTag(el.id)}
+                      className={
+                        storeTags.length === 1
+                          ? `${style['delete-button']} ${style['inactive']}`
+                          : style['delete-button']
+                      }
+                      onClick={(e) =>
+                        e.target.className === style['delete-button']
+                          ? deleteTag(el.id)
+                          : null
+                      }
+                    >
+                      Delete
+                    </Button>
+                  {/* } */}
+
+                  {/* {storeTags.length - 1 === i && ( */}
+                  <Button 
+                    className={style['add-button']} 
+                    onClick={() => addTag(value)}
+                  >
+                    Add Tag
+                  </Button>
+                  {/* )} */}
+                </li>
+              </ul>
+            );
+          })}
+          {!storeTags.length && (
+            <li className={style['tag']}>
+            <input 
+              className={style['tags-input']} 
+              placeholder='Tag'
+              // defaultValue={el.content} 
+              // value={value} 
+              // onChange={onChange}
+              onChange={(e) =>
+                dispatch(setCreatedTag({ id: uniqid(), content: e.target.value }))
+              }
+            />
+            <Button 
+              className={style['add-button']} 
+              onClick={() => addTag(value)}
+            >
+              Add Tag
+            </Button>
+          </li> 
+          )}
          <div>
           {errors.tag && <p className={style['error']}>{errors.tag.message}</p>}
           </div>
-        </ul>
+        </div>
 
         <button className={style['button']}
           type="submit"

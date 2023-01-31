@@ -24,13 +24,14 @@ export default function Post({ data, showBody }) {
 		// id, price, carrier, segments,
 		title,
 		description,
+    favorited,
 		favoritesCount,
 		tagList,
 		createdAt,
 		body,
 	} = data;
 	const { username, image } = data.author;
-
+  
 	const dateFormater = (item) => {
 		return format(
 			new Date(item.slice(0, 4), item.slice(5, 6), item.slice(8, 10)),
@@ -42,6 +43,12 @@ export default function Post({ data, showBody }) {
     dispatch(deleteArticle(slug))
     navigate('/', {replace: true})
   }
+  // const likePost = () => {
+  //   console.log('favorited', favorited)
+  //   favorited 
+  //     ? dispatch(deleteLike(slug))
+  //     : dispatch(postLike(slug))
+  // }
 
 	return (
 		<div className={style['card']}>
@@ -51,7 +58,13 @@ export default function Post({ data, showBody }) {
 						<Link to={`/articles/${slug}`} className={style['title-link']}>
 							<h5 className={style['title']}>{title}</h5>
 						</Link>
-						<span className={style['likes']}>{favoritesCount}</span>
+						<span 
+              className={style['likes']}
+              // onClick={()=>likePost()}
+              onClick={()=>console.log('post like')}
+            >
+              {favoritesCount}
+            </span>
 						<div className={style['tag-list']}>
 							{tagList.map((tag) => (
 								<span className={style['tag']} key={uniqid()}>

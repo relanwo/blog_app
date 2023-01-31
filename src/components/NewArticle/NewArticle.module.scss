@@ -101,6 +101,7 @@
 .tag-wrapper {
   // list-style: none;
   padding-left: 0;
+  display: flex;
 }
 .tag {
   list-style: none;
@@ -175,4 +176,19 @@
   margin: 0;
   position: relative;
   top: -5px;
+}
+
+.inactive {
+	border-color: #d9d9d9;
+	color: #eaeaea;
+	background-color: #bababa;
+
+	&:hover {
+		background-color: #bababa;
+		border-color: #d9d9d9;
+		color: #eaeaea;
+		cursor: default;
+		opacity: 100%;
+		transform: scale(1);
+	}
 }

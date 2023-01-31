@@ -74,7 +74,7 @@ export const deleteArticle = createAsyncThunk(
 );
 
 export const getArticleData = createAsyncThunk(
-	'user/deleteArticle',
+	'user/getArticleData',
 	async function (slug, { rejectWithValue, dispatch }) {
 		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
 			method: 'GET',
@@ -87,6 +87,55 @@ export const getArticleData = createAsyncThunk(
 		console.log('response', response);
 		if (response.status === 422) {
 			return rejectWithValue('Some server error. Please, try again.');
+		}
+		const data = await response.json();
+		console.log('data', data);
+		// dispatch(setUser(data.user))
+		return data;
+	}
+);
+
+export const deleteLike = createAsyncThunk(
+	'user/deleteLike',
+	async function (slug, { rejectWithValue, dispatch }) {
+		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Token ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			// body: JSON.stringify({ article: arr }),
+		});
+		console.log('response', response);
+		if (response.status === 422) {
+			return rejectWithValue('Some server error. Please, try again.');
+		}
+    if (response.status === 401) {
+			return rejectWithValue('Unauthorized.');
+		}
+		const data = await response.json();
+		console.log('data', data);
+		// dispatch(setUser(data.user))
+		return data;
+	}
+);
+export const postLike = createAsyncThunk(
+	'user/postLike',
+	async function (slug, { rejectWithValue, dispatch }) {
+		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Token ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			// body: JSON.stringify({ article: arr }),
+		});
+		console.log('response', response);
+		if (response.status === 422) {
+			return rejectWithValue('Some server error. Please, try again.');
+		}
+    if (response.status === 401) {
+			return rejectWithValue('Unauthorized.');
 		}
 		const data = await response.json();
 		console.log('data', data);
@@ -139,11 +188,12 @@ const articleSlice = createSlice({
 			// state.tagList += action.payload
 			// state.tagList = action.payload
 		},
-		// changeSlug(state, action) {
-		//   console.log('changeSlug ACTION >',action)
+    clearTagsList(state, action) {
+			// console.log('paginationSlice STATE >',state);
+			console.log('deleteChosenTag ACTION >', action);
 
-		//   state.chosenSlug = action.payload
-		// }
+			state.tagList = []
+		},
 	},
 	extraReducers: {
 		[postNewArticle.pending]: (state, action) => {
@@ -207,10 +257,18 @@ const articleSlice = createSlice({
 			state.error = action.payload;
 			// state.articles = []
 		},
+
+		// [deleteLike.fulfilled]: (state, action) => {
+		// 	console.log('fetchArticles.fulfilled');
+		// 	console.log('ACTION', action);
+		// 	state.status = 'resolved';
+		// 	state.article = action.payload;
+    //   console.log('state.article', state.article)
+		// },
 	},
 });
 
-export const { changePage, changeSlug, setCreatedTag, deleteChosenTag } =
+export const { changePage, changeSlug, setCreatedTag, deleteChosenTag, clearTagsList } =
 	articleSlice.actions;
 
 export default articleSlice.reducer;
