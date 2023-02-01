@@ -33,6 +33,7 @@ const articleConfig = {
   key: 'articles',
   storage,
   blacklist: ['tagList', 'error', 'status', 'article']
+  // , 'article'
 };
 
 const rootReducer = combineReducers({

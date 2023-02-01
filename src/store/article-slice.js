@@ -51,14 +51,17 @@ export const postNewArticle = createAsyncThunk(
 export const deleteArticle = createAsyncThunk(
 	'user/deleteArticle',
 	async function (slug, { rejectWithValue, dispatch }) {
-		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Token ${localStorage.getItem('token')}`,
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			// body: JSON.stringify({ article: arr }),
-		});
+		const response = await fetch(
+			`https://blog.kata.academy/api/articles/${slug}`,
+			{
+				method: 'DELETE',
+				headers: {
+					Authorization: `Token ${localStorage.getItem('token')}`,
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				// body: JSON.stringify({ article: arr }),
+			}
+		);
 		console.log('response', response);
 		if (response.status === 401) {
 			return rejectWithValue('Unauthorized');
@@ -76,14 +79,17 @@ export const deleteArticle = createAsyncThunk(
 export const getArticleData = createAsyncThunk(
 	'user/getArticleData',
 	async function (slug, { rejectWithValue, dispatch }) {
-		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
-			method: 'GET',
-			// headers: {
-			// 	Authorization: `Token ${localStorage.getItem('token')}`,
-			// 	'Content-Type': 'application/json;charset=utf-8',
-			// },
-			// body: JSON.stringify({ article: arr }),
-		});
+		const response = await fetch(
+			`https://blog.kata.academy/api/articles/${slug}`,
+			{
+				method: 'GET',
+				// headers: {
+				// 	Authorization: `Token ${localStorage.getItem('token')}`,
+				// 	'Content-Type': 'application/json;charset=utf-8',
+				// },
+				// body: JSON.stringify({ article: arr }),
+			}
+		);
 		console.log('response', response);
 		if (response.status === 422) {
 			return rejectWithValue('Some server error. Please, try again.');
@@ -98,19 +104,22 @@ export const getArticleData = createAsyncThunk(
 export const deleteLike = createAsyncThunk(
 	'user/deleteLike',
 	async function (slug, { rejectWithValue, dispatch }) {
-		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Token ${localStorage.getItem('token')}`,
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			// body: JSON.stringify({ article: arr }),
-		});
+		const response = await fetch(
+			`https://blog.kata.academy/api/articles/${slug}/favorite`,
+			{
+				method: 'DELETE',
+				headers: {
+					Authorization: `Token ${localStorage.getItem('token')}`,
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				// body: JSON.stringify({ article: arr }),
+			}
+		);
 		console.log('response', response);
 		if (response.status === 422) {
 			return rejectWithValue('Some server error. Please, try again.');
 		}
-    if (response.status === 401) {
+		if (response.status === 401) {
 			return rejectWithValue('Unauthorized.');
 		}
 		const data = await response.json();
@@ -122,19 +131,22 @@ export const deleteLike = createAsyncThunk(
 export const postLike = createAsyncThunk(
 	'user/postLike',
 	async function (slug, { rejectWithValue, dispatch }) {
-		const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
-			method: 'DELETE',
-			headers: {
-				Authorization: `Token ${localStorage.getItem('token')}`,
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			// body: JSON.stringify({ article: arr }),
-		});
+		const response = await fetch(
+			`https://blog.kata.academy/api/articles/${slug}/favorite`,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Token ${localStorage.getItem('token')}`,
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				// body: JSON.stringify({ article: arr }),
+			}
+		);
 		console.log('response', response);
 		if (response.status === 422) {
 			return rejectWithValue('Some server error. Please, try again.');
 		}
-    if (response.status === 401) {
+		if (response.status === 401) {
 			return rejectWithValue('Unauthorized.');
 		}
 		const data = await response.json();
@@ -152,9 +164,9 @@ const articleSlice = createSlice({
 		error: null,
 		page: 1,
 		pageSize: 20,
-		tagList: [],
+		tagList: [''],
 
-    article: null
+		article: null,
 	},
 	reducers: {
 		// getArticles(state, action) {
@@ -171,50 +183,57 @@ const articleSlice = createSlice({
 			state.page = action.payload;
 		},
 		setCreatedTag(state, action) {
-			// console.log('paginationSlice STATE >',state);
 			console.log('setCreatedTag ACTION >', action);
 
 			state.tagList.push(action.payload);
-			// state.tagList += action.payload
-			// state.tagList = action.payload
 		},
 		deleteChosenTag(state, action) {
-			// console.log('paginationSlice STATE >',state);
 			console.log('deleteChosenTag ACTION >', action);
 
-			state.tagList = state.tagList.filter((el) => el.id !== action.payload);
-      // state.tags = state.tags.filter((el) => el.id !== action.payload)
-      console.log('tagList', state.tagList)
-			// state.tagList += action.payload
-			// state.tagList = action.payload
+			state.tagList = state.tagList.filter((el, i) => i !== action.payload);
+			// state.tagList = state.tagList.filter((el) => el.id !== action.payload);
+
+			console.log('tagList', state.tagList);
 		},
-    clearTagsList(state, action) {
+		changeChosenTag(state, action) {
+			console.log('changeChosenTag ACTION >', action.payload);
+
+			// state.tagList = state.tagList.filter((el, i) => i !== action.payload);
+			// state.tagList = state.tagList.filter((el) => el.id !== action.payload);
+			const ind = state.tagList.findIndex((el) => el.id === action.payload[0]);
+			state.tagList.splice(ind, 1, action.payload[1]);
+			// console.log('tagList', state.tagList);
+		},
+    clearArticle(state, action) {
 			// console.log('paginationSlice STATE >',state);
 			console.log('deleteChosenTag ACTION >', action);
 
-			state.tagList = []
+			state.article = [];
+		},
+		clearTagsList(state, action) {
+			// console.log('paginationSlice STATE >',state);
+			console.log('deleteChosenTag ACTION >', action);
+
+			state.tagList = [''];
 		},
 	},
 	extraReducers: {
 		[postNewArticle.pending]: (state, action) => {
-			console.log('fetchArticles.pending');
-			// console.log('ACTION', action)
+			console.log('postNewArticle.pending');
 			state.status = 'loading';
-			// state.articles = []
 		},
 		[postNewArticle.fulfilled]: (state, action) => {
-			console.log('fetchArticles.fulfilled');
+			console.log('postNewArticle.fulfilled');
 			console.log('ACTION', action);
 			state.status = 'resolved';
-			state.articles = action.payload;
+			state.article = action.payload;
 		},
 		[postNewArticle.rejected]: (state, action) => {
-			console.log('fetchArticles.rejected');
+			console.log('postNewArticle.rejected');
 			console.log('ACTION', action);
 
 			state.status = 'rejected';
 			state.error = action.payload;
-			// state.articles = []
 		},
 		[fetchArticles.pending]: (state, action) => {
 			console.log('fetchArticles.pending');
@@ -236,39 +255,48 @@ const articleSlice = createSlice({
 			state.error = action.payload;
 			// state.articles = []
 		},
-    [getArticleData.pending]: (state, action) => {
-			console.log('fetchArticles.pending');
-			// console.log('ACTION', action)
-			state.status = 'loading';
-			// state.articles = []
-		},
 		[getArticleData.fulfilled]: (state, action) => {
 			console.log('fetchArticles.fulfilled');
 			console.log('ACTION', action);
 			state.status = 'resolved';
-			state.article = action.payload;
-      console.log('state.article', state.article)
-		},
-		[getArticleData.rejected]: (state, action) => {
-			console.log('fetchArticles.rejected');
-			console.log('ACTION', action);
-
-			state.status = 'rejected';
-			state.error = action.payload;
-			// state.articles = []
+			state.article = action.payload.article;
 		},
 
-		// [deleteLike.fulfilled]: (state, action) => {
-		// 	console.log('fetchArticles.fulfilled');
-		// 	console.log('ACTION', action);
-		// 	state.status = 'resolved';
-		// 	state.article = action.payload;
-    //   console.log('state.article', state.article)
-		// },
+
+		[deleteLike.fulfilled]: (state, action) => {
+			console.log('deleteLike.fulfilled');
+			console.log('deleteLike ACTION', action);
+			state.status = 'resolved';
+			state.article = action.payload.article;
+			// state.article.favorited = action.payload.article.favorited;
+			console.log('state.article', state.article);
+		},
+		[postLike.fulfilled]: (state, action) => {
+			console.log('postLike.fulfilled');
+			console.log('postLike ACTION', action);
+			state.status = 'resolved';
+			state.articles = state.articles.map((el) => {
+				if (el.slug === action.payload.article.slug) {
+					return action.payload.article;
+				}
+				return el;
+			});
+			// state.article = action.payload.article;
+			// state.article.favorited = true;
+			// state.article.favorited = action.payload.article.favorited;
+			console.log('state.article', state.article);
+		},
 	},
 });
 
-export const { changePage, changeSlug, setCreatedTag, deleteChosenTag, clearTagsList } =
-	articleSlice.actions;
+export const {
+	changePage,
+	changeSlug,
+	setCreatedTag,
+	deleteChosenTag,
+	changeChosenTag,
+  clearArticle,
+	clearTagsList,
+} = articleSlice.actions;
 
 export default articleSlice.reducer;

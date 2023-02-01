@@ -17,6 +17,7 @@ import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 import Profile from '../Profile/Profile';
 import NewArticlePage from '../../pages/NewArticlePage'
+import EditArticlePage from '../../pages/EditArticlePage'
 
 import RequireAuth from '../hoc/RequireAuth';
 import SignIn from '../SignIn/SignIn';
@@ -27,7 +28,7 @@ function App() {
   // useEffect(() => {
   //   localStorage.clear(); //потоом буду удалять при логауте
 	// }, []);
-  const isAuth = useSelector((state) => state.user.isAuth)
+  // const isAuth = useSelector((state) => state.user.isAuth)
 	return (
 		<div className={style['app']}>
 			<Routes>
@@ -42,8 +43,7 @@ function App() {
         <Route path="articles" element={<Navigate to='/' replace />} /> {/* чтобы не сохр /articles в истории посещений, добавляем replace */}
         {/* <Route path="articles" element={<MainPage />} /> */}
         <Route path="articles/:slug" element={<SingleArticlePage />} />
-        <Route path="articles/:slug/edit" element={<NewArticlePage />} />
-        {/* `/articles/${slug}/edit` */}
+        <Route path="articles/:slug/edit" element={<EditArticlePage />} />
         {/* <Route path="sign-in" element={() => (!isAuth ? <SignIn /> : <Navigate to="/" />)} /> */}
         {/* <Route path="sign-in" element={<SignIn />} /> */}
         <Route path="sign-in" element={<LoginPage />} />

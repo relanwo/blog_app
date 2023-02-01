@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import {deleteArticle} from '../../store/article-slice';
+import { deleteLike, postLike } from '../../store/article-slice'
+import { useCallback, useEffect } from 'react';
 
 const { Header, Content, Sider } = Layout;
 
@@ -43,12 +45,25 @@ export default function Post({ data, showBody }) {
     dispatch(deleteArticle(slug))
     navigate('/', {replace: true})
   }
-  // const likePost = () => {
-  //   console.log('favorited', favorited)
-  //   favorited 
-  //     ? dispatch(deleteLike(slug))
-  //     : dispatch(postLike(slug))
-  // }
+
+  // const params = useMemo(() => {
+	//   return element
+	// }, [element])
+  // useCallback(() => {
+  // })
+  const likePost = (slug) => {
+    console.log('favorited', favorited)
+    favorited 
+    // ? console.log('like', slug)
+    // : console.log('dislike', slug)
+    ? dispatch(deleteLike(slug))
+    : dispatch(postLike(slug))
+  }
+
+  // useEffect(() => {
+  //   dispatch(postLike(slug))
+  //   dispatch(deleteLike(slug))
+  // }, [dispatch, favorited, slug])
 
 	return (
 		<div className={style['card']}>
@@ -59,9 +74,15 @@ export default function Post({ data, showBody }) {
 							<h5 className={style['title']}>{title}</h5>
 						</Link>
 						<span 
-              className={style['likes']}
-              // onClick={()=>likePost()}
-              onClick={()=>console.log('post like')}
+              // className={style['likes']}
+              className={
+                favorited
+                  ? `${style['likes']} ${style['liked']}`
+                  : style['likes']
+              }
+              // className=`${style['likes']} ${style['liked']}`
+              onClick={()=>likePost(slug)}
+              // onClick={()=>console.log('post like', slug)}
             >
               {favoritesCount}
             </span>

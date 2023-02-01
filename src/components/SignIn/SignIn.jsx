@@ -97,46 +97,6 @@ function SignIn() {
 
       </form>
     </>
-		// <Form 
-    //   onSubmit={handleSubmit(onSubmit)}
-    //   className={style['form']} layout="vertical">
-		// 	<p className={style['title']}>Sign In</p>
-		// 	<Form.Item
-    //     {...register("email")}
-    //     //, { required: true }
-		// 		className={style['wrapper']}
-		// 		name="Email"
-		// 		label="Email address"
-		// 		rules={[
-		// 			// { required: true },
-		// 			// { type: 'url', warningOnly: true },
-		// 			{ type: 'string' },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Email address" />
-		// 	</Form.Item>
-		// 	<Form.Item
-    //     {...register("password", { required: true })}
-		// 		className={style['wrapper']}
-		// 		name="Password"
-		// 		label="Password"
-		// 		rules={[
-		// 			// { required: true },
-		// 			// { type: 'url', warningOnly: true },
-		// 			{ type: 'string', min: 6, max: 40 },
-		// 		]}
-		// 	>
-		// 		<Input className={style['input']} placeholder="Password" />
-		// 	</Form.Item>
-		// 	<Button type="primary" htmlType="submit" className={style['button']}
-    //     // onSubmit={handleSubmit((data) => console.log(JSON.stringify(data)))}
-    //     >
-		// 		Login
-		// 	</Button>
-		// 	<div className={style['underbutton-text']}>
-		// 		Don’t have an account? <Link to="/sign-up">Sign Up</Link>.
-		// 	</div>
-		// </Form>
 	);
 }
 

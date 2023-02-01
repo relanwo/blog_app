@@ -99,14 +99,19 @@
 }
 
 .tag-wrapper {
-  // list-style: none;
   padding-left: 0;
   display: flex;
+  flex-direction: column;
 }
 .tag {
   list-style: none;
   display: flex;
   align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.input-disable {
+  pointer-events: none;
 }
 
 .button {
