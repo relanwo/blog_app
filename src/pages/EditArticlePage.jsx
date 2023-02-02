@@ -38,6 +38,15 @@ const EditArticlePage = () => {
 		}
 	});
 
+  if (articleData) {
+    sessionStorage.setItem("title", articleData.title)
+    sessionStorage.setItem("description", articleData.description)
+    sessionStorage.setItem("body", articleData.body)
+    articleData.tagList !== [] 
+      && sessionStorage.setItem("tagList", JSON.stringify(articleData.tagList))
+    // sessionStorage.setItem("tagList", JSON.stringify(fields))
+  }
+
   // const articleData = useSelector((state) => state.articles.article);  
 
   // const articleData = useSelector((state) => {

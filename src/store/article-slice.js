@@ -185,24 +185,26 @@ const articleSlice = createSlice({
 		setCreatedTag(state, action) {
 			console.log('setCreatedTag ACTION >', action);
 
-			state.tagList.push(action.payload);
+			state.article.tagList.push(action.payload);
+			// state.tagList.push(action.payload);
 		},
 		deleteChosenTag(state, action) {
 			console.log('deleteChosenTag ACTION >', action);
 
-			state.tagList = state.tagList.filter((el, i) => i !== action.payload);
-			// state.tagList = state.tagList.filter((el) => el.id !== action.payload);
+			state.article.tagList = state.article.tagList.filter((el, i) => i !== action.payload);
+			// state.tagList = state.tagList.filter((el, i) => i !== action.payload);
 
 			console.log('tagList', state.tagList);
 		},
 		changeChosenTag(state, action) {
 			console.log('changeChosenTag ACTION >', action.payload);
 
-			// state.tagList = state.tagList.filter((el, i) => i !== action.payload);
-			// state.tagList = state.tagList.filter((el) => el.id !== action.payload);
-			const ind = state.tagList.findIndex((el) => el.id === action.payload[0]);
-			state.tagList.splice(ind, 1, action.payload[1]);
-			// console.log('tagList', state.tagList);
+			// const ind = state.tagList.findIndex((el) => el.id === action.payload[0]);
+			// state.tagList.splice(ind, 1, action.payload[1]);
+      const ind = state.article.tagList.findIndex((el) => el.id === action.payload[0]);
+			state.article.tagList.splice(ind, 1, action.payload[1]);
+
+			console.log('tagList', state.tagList);
 		},
     clearArticle(state, action) {
 			// console.log('paginationSlice STATE >',state);

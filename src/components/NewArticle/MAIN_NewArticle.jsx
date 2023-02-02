@@ -101,6 +101,85 @@ function NewArticle({articleData}) {
 		})
   };
 
+  // const addTag = (value) => {
+  //   // const id = uniqid()
+  //   // const item = { id, content: value }
+  //   // dispatch(setCreatedTag(item))
+  //   dispatch(setCreatedTag(value))
+  //   setValue('')
+  // }
+  // const deleteTag = (id) => dispatch(deleteChosenTag(id))
+	// // 	const newData = JSON.stringify(
+	// // 		// [...articles.tags].filter((el) => el.id !== id)
+	// // 	)
+	// // 	// localStorage.setItem('tags', newData)
+	// // }
+  // const mapTags = (arrOfTags) => {
+  //   if (arrOfTags !== undefined) {
+  //     arrOfTags.map((el, i) => {
+  //       return (
+  //         <li className={style['tag']} key={el.id}>
+  //         <input className={style['tags-input']} 
+  //           defaultValue={el.content} 
+  //           // value={value} 
+  //           // onChange={onChange}
+  //           onChange={(e) =>
+  //             dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+  //           }
+  //         />
+  //         <Button 
+  //           className={style['delete-button']} 
+  //           onClick={() => deleteTag(el.id)}
+  //           >Delete</Button>
+  //         </li>
+  //       );
+  //     })
+  //   }
+  // }
+
+  // let tags
+  // // if (storeTags !== undefined) {
+  //   tags = storeTags.map((el, i) => {
+  //     //   return ()
+  //     // if (storeTags.length >= 0) {
+  //       return (
+  //         <div className={style['tag']} key={el.id}>
+  //           <input 
+  //             className={style['tags-input']} 
+  //             placeholder='Tag'
+  //             defaultValue={el.content} 
+  //             // value={value} 
+  //             // onChange={onChange}
+  //             onChange={(e) =>
+  //               dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
+  //             }
+  //           />
+  //           <Button 
+  //             // className={style['delete-button']} 
+  //             // onClick={() => deleteTag(el.id)}
+  //             className={
+  //               storeTags.length === 1
+  //                 ? `${style['delete-button']} ${style['inactive']}`
+  //                 : style['delete-button']
+  //             }
+  //             onClick={(e) =>
+  //               e.target.className === style['delete-button']
+  //                 ? deleteTag(el.id)
+  //                 : null
+  //             }
+  //           >
+  //             Delete
+  //           </Button>
+  //           {/* <Button 
+  //             className={style['add-button']} 
+  //             onClick={() => addTag(value)}
+  //             >Add Tag</Button> */}
+  //        </div>
+  //       );
+  //     // }
+  //   })
+  // // }
+
   const handleTagAdd = (index) => {
     dispatch(setCreatedTag(''))
     // console.log('handleTagAdd index',index)
@@ -110,7 +189,8 @@ function NewArticle({articleData}) {
   const handleTagRemove = (index) => {
     // console.log('handleTagRemove index',index)
     // if (articleData) {
-    //   articleData.tagList.filter((el, i) => i !== index)
+    //   const newTaglist = articleData.tagList.filter((el, i) => i !== index)
+    //   return articleData = {...articleData, newTaglist}
     // } else {
       dispatch(deleteChosenTag(index))
     // }

@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import style from './NewArticle.module.scss';
 import { Button, Form, Input, message, Space, Title, Alert } from 'antd';
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 import uniqid from 'uniqid';
@@ -23,22 +23,6 @@ function NewArticle({articleData}) {
   const location = useLocation();
 
   const editOrNewParam = location.pathname
-  // useEffect(() => {
-  //   if (editOrNewParam !== '/new-article') {
-  //     dispatch(getArticleData(editOrNewParam.slice(10, -5)))
-  //   }
-  // }, [dispatch, editOrNewParam])
-
-  // const article = useSelector((state) => {
-	// 	if (state.articles.article) {
-	// 		const { article } = state.articles.article;
-	// 		return article;
-	// 	} else {
-	// 		return [];
-	// 	}
-	// });
-  // console.log('article.tagList',article.tagList)
-  // console.log('editOrNewParam', editOrNewParam)
 
   const storeTags = useSelector((state) => state.articles.tagList)
 
@@ -52,138 +36,41 @@ function NewArticle({articleData}) {
     register, //для регистрации полей формы
     handleSubmit, // обёртка над нашим хэндлером отправки формы
     watch, 
+    control,
     reset, //очистит поля ввода после отправки
     formState: { errors, isValid } // объект со всякими свойствами
    } = useForm({
-    mode: "onChange"
+    mode: "onChange",
+    // defaultValues: {tags: [{ghgj}]}
+    defaultValues: {
+      tags: [{name: ''}]
+    }
    });
+   const { fields, append, update, remove } = useFieldArray({
+    name: 'tags',
+    control
+   })
 
-  // const onSubmit = data => {
-  //   console.log('submit')
-  //   if (storeTags !== []) {
-  //     data.tagList = storeTags.map((el) => {
-  //       return el.content
-  //     }) 
-  //   } else {
-  //     data.tagList = []
-  //   }
-  //   // const {rep_password, ...clearData} = data
-  //   console.log('data',data)
-  //   dispatch(postNewArticle(data));
-  //   dispatch(clearTagsList())
-  //   sessionStorage.clear()
-  //   // if (data) navigate('/')
-  //   // isAuth && navigate(fromPage)
-  //   // navigate(a)
-  //   // alert(JSON.stringify(data))
-  //   // reset()
-  //   navigate('/', {replace: true})
-  // };
+
   const onSubmit = async (data) => {
-    data.tagList = JSON.parse(sessionStorage.getItem("tagList"))
-    // data.taglist =  JSON.parse(data.taglist)
-    // data.taglist.map((item) => {
-    //   if (item.match(/("|,|\n)/)) {
-    //     item = item.replace(/"/g, '""')
-    //     item = `"${item}"`
-    //   }
-    //   return item;
-    // })
-      // el.replace("'","\""))
+    sessionStorage.setItem("tagList", JSON.stringify(fields))
+    // console.log('register', )
+    data.tagList = JSON.parse(sessionStorage.getItem("tagList")).map((el) => el?.name !== undefined && el.name)
     console.log('data',data)
     await dispatch(postNewArticle(data)).then(() => {
-			// if (!sessionStorage.getItem('tagList')) {
 				navigate('/articles')
 				dispatch(clearTagsList())
 				dispatch(clearArticle())
-        
-			// }
 		})
   };
 
-  // const addTag = (value) => {
-  //   // const id = uniqid()
-  //   // const item = { id, content: value }
-  //   // dispatch(setCreatedTag(item))
-  //   dispatch(setCreatedTag(value))
-  //   setValue('')
-  // }
-  // const deleteTag = (id) => dispatch(deleteChosenTag(id))
-	// // 	const newData = JSON.stringify(
-	// // 		// [...articles.tags].filter((el) => el.id !== id)
-	// // 	)
-	// // 	// localStorage.setItem('tags', newData)
-	// // }
-  // const mapTags = (arrOfTags) => {
-  //   if (arrOfTags !== undefined) {
-  //     arrOfTags.map((el, i) => {
-  //       return (
-  //         <li className={style['tag']} key={el.id}>
-  //         <input className={style['tags-input']} 
-  //           defaultValue={el.content} 
-  //           // value={value} 
-  //           // onChange={onChange}
-  //           onChange={(e) =>
-  //             dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
-  //           }
-  //         />
-  //         <Button 
-  //           className={style['delete-button']} 
-  //           onClick={() => deleteTag(el.id)}
-  //           >Delete</Button>
-  //         </li>
-  //       );
-  //     })
-  //   }
-  // }
-
-  // let tags
-  // // if (storeTags !== undefined) {
-  //   tags = storeTags.map((el, i) => {
-  //     //   return ()
-  //     // if (storeTags.length >= 0) {
-  //       return (
-  //         <div className={style['tag']} key={el.id}>
-  //           <input 
-  //             className={style['tags-input']} 
-  //             placeholder='Tag'
-  //             defaultValue={el.content} 
-  //             // value={value} 
-  //             // onChange={onChange}
-  //             onChange={(e) =>
-  //               dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
-  //             }
-  //           />
-  //           <Button 
-  //             // className={style['delete-button']} 
-  //             // onClick={() => deleteTag(el.id)}
-  //             className={
-  //               storeTags.length === 1
-  //                 ? `${style['delete-button']} ${style['inactive']}`
-  //                 : style['delete-button']
-  //             }
-  //             onClick={(e) =>
-  //               e.target.className === style['delete-button']
-  //                 ? deleteTag(el.id)
-  //                 : null
-  //             }
-  //           >
-  //             Delete
-  //           </Button>
-  //           {/* <Button 
-  //             className={style['add-button']} 
-  //             onClick={() => addTag(value)}
-  //             >Add Tag</Button> */}
-  //        </div>
-  //       );
-  //     // }
-  //   })
-  // // }
-
   const handleTagAdd = (index) => {
     dispatch(setCreatedTag(''))
-    // console.log('handleTagAdd index',index)
-    // sessionStorage.setItem(`tag ${index}`,)
+
+    // const a = JSON.parse(sessionStorage.getItem('tagList'))
+    // a.push('')
+    // sessionStorage.setItem('tagList', JSON.stringify(a))
+    // console.log('sessionStorage.getItem',sessionStorage.getItem('tagList'))
   }
 
   const handleTagRemove = (index) => {
@@ -197,46 +84,25 @@ function NewArticle({articleData}) {
 
   const fghjghjhgvhhj = useSelector((state) => state.articles.article)
   const handleInputChange = (e, index) => {
-    // const {name, value} = e.target
-    // storeTags[index] = value
-    // storeTags[index][name]
-
-    // sessionStorage.setItem(`tags`, [...sessionStorage.getItem(`tags`), e.target.value])
-    // data.tags.push(e.target.value)
-    console.log('state taglist', fghjghjhgvhhj)
-
+    // console.log('state taglist', fghjghjhgvhhj)
     let newData
     if (storeTags) {
       const params = [index, e.target.value]
       dispatch(changeChosenTag(params))
-      newData = JSON.stringify([...storeTags])
+      // newData = JSON.stringify([...storeTags])
+      newData = e.target.value
     } else {
       articleData.tagList[index] = e.target.value
-      // const ind = articleData.tagList.findIndex((el) => el.id === index);
-			// articleData.tagList.splice(ind);
-      // newData = [...articleData.tagList]
-      // newData = JSON.parse(sessionStorage.setItem("tagList", sessionStorage.getItem("tagList")[index]))
-      // newData = JSON.parse(sessionStorage.getItem("tagList"))
     }
     console.log('NEW DATA', newData)
 		sessionStorage.setItem('tagList', newData)
   }
 
   console.log('articleData', articleData)
-  if (articleData) {
-    sessionStorage.setItem("title", articleData.title)
-    sessionStorage.setItem("description", articleData.description)
-    sessionStorage.setItem("body", articleData.body)
-    articleData.tagList !== [] 
-      && sessionStorage.setItem("tagList", JSON.stringify(articleData.tagList))
-      // : [""]
-  }
-  // let arrayOfTags
-  // articleData ? arrayOfTags=articleData.tagList : arrayOfTags=storeTags
-  // console.log('arrayOfTags', arrayOfTags)
+
+
 	return (
     <>
-    {/* {fromPage} */}
       <form 
         onSubmit={handleSubmit(onSubmit)}
         className={style['form']}
@@ -245,7 +111,6 @@ function NewArticle({articleData}) {
         {editOrNewParam === '/new-article'
           ? 'Create new article'
           : 'Edit article'}
-        {/* // Create new article */}
       </p>
         <label className={style['wrapper']}>
           Title
@@ -256,12 +121,8 @@ function NewArticle({articleData}) {
             })}
             className={style['input']} placeholder="Title"
             style={{border: errors.title ? '1px solid red' : '' }}
-            // value={editOrNewParam !== '/new-article' && article.title !==undefined ? article.title : sessionStorage.getItem("title")}
             onChange={(e) => onChange("title", e)}
-            // value={articleData && sessionStorage.getItem("title")}
             defaultValue={articleData ? sessionStorage.getItem("title") : ''}
-            // value={rticleData.title}
-            // onChange={onChange}
           />
         </label>
         <div>
@@ -276,11 +137,7 @@ function NewArticle({articleData}) {
             })}
             className={style['input']} placeholder="Description"
             style={{border: errors.description ? '1px solid red' : '' }}
-            // value={editOrNewParam !== '/new-article' && article.description ? article.description : sessionStorage.getItem("description")}
-            // value={sessionStorage.getItem("description")}
             onChange={(e) => onChange("description", e)}
-            // value={articleData && articleData.description}
-            // value={articleData && sessionStorage.getItem("description")}
             defaultValue={articleData ? sessionStorage.getItem("description")  : ''}
           />
         </label>
@@ -298,8 +155,6 @@ function NewArticle({articleData}) {
             className={style['input']} placeholder="Text"
             style={{border: errors.body ? '1px solid red' : '' }}
             onChange={(e) => onChange("body", e)}
-            // value={articleData && articleData.body}
-            // value={articleData && sessionStorage.getItem("body")}
             defaultValue={articleData ? sessionStorage.getItem("body")  : ''}
           />
         </label>
@@ -311,61 +166,53 @@ function NewArticle({articleData}) {
           Tags
         </label>
         <ul className={style['tag-wrapper']}
-          // {...register("tags", {
-          //   required: "At least one tag is required"
-          // })}
           >
-          {(articleData?.tagList !== undefined ? articleData.tagList : storeTags).map((singleTag, index) => {
-          // {(articleData.tagList ? JSON.parse(sessionStorage.getItem("tagList")) : storeTags).map((singleTag, index) => {
-            // console.log('articleData.tagList', articleData.tagList)
-            // console.log('JSON.parse(sessionStorage.getItem("tagList")', JSON.parse(sessionStorage.getItem("tagList")))
+
+          {(!articleData?.tagList ? fields : []).map((singleTag, index) => {
+            return (
+            <li className={style['tag']} key={singleTag?.id ? singleTag.id : index}>
+              <input 
+                {...register(`tags.${index}.name`)}
+                className={style['tags-input']} 
+                placeholder='Tag'
+              />
+              {(fields && fields.length) > 1 &&
+                <Button 
+                  type='button'
+                  className={style['delete-button']} 
+                  // onClick={() => handleTagRemove(index)}
+                  onClick={() => remove(index)}
+                >
+                  Delete
+                </Button>
+              }
+
+              {(fields && fields.length)  - 1 === index &&
+                <Button 
+                  type='button'
+                  className={style['add-button']} 
+                  // onClick={() => handleTagAdd(index)}
+                  onClick={() => append()}
+                >
+                  Add Tag
+                </Button>
+              }
+            </li>
+          )})}
+
+
+          {(articleData.tagList !== undefined ? articleData.tagList : []).map((singleTag, index) => {
             return (
             <li className={style['tag']} key={index}>
               <input 
                 className={style['tags-input']} 
                 placeholder='Tag'
-                value={singleTag}
-                  // value={storeTags && singleTag}
-                  // defaultValue={articleData && singleTag}
-                // onChange={(e) => onChange(index, e)}
+                defaultValue={singleTag}
                 onChange={(e) => handleInputChange(e, index)}
-                // className={
-                //   (index === 0) 
-                //     ? {(storeTags.length === 1)
-                //         ? style['tags-input']
-                //         : `${style['tags-input']} ${style['input-disable']}`
-                //       }
-                //     : style['tags-input']
-                // }
-                // className={
-                //   (index === 0 && value!=='') 
-                //     // ? style['tags-input']
-                //     ? `${style['tags-input']} ${style['input-disable']}`
-                //     : style['tags-input']
-                // }
-                // defaultValue={el.content} 
-                // value={value} 
-                // onChange={onChange}
-                // onChange={(e) =>
-                //   dispatch(setCreatedTag({ id: el.id, content: e.target.value }))
-                // }
-                // value={editOrNewParam !== '/new-article' ? storeTags[i] : sessionStorage.getItem("tag")}
-                // onChange={(e) => onChange("tag", e)}
               />
               {(articleData?.tagList !== undefined ? JSON.parse(sessionStorage.getItem("tagList")) : storeTags).length > 1 &&
                 <Button 
                   className={style['delete-button']} 
-                  // onClick={() => deleteTag(el.id)}
-                  // className={
-                  //   storeTags.length === 1
-                  //     ? `${style['delete-button']} ${style['inactive']}`
-                  //     : style['delete-button']
-                  // }
-                  // onClick={(e) =>
-                  //   e.target.className === style['delete-button']
-                  //     // ? deleteTag(el.id)
-                  //     // : null
-                  // }
                   onClick={() => handleTagRemove(index)}
                 >
                   Delete
@@ -375,7 +222,6 @@ function NewArticle({articleData}) {
               {(articleData?.tagList !== undefined ? articleData.tagList : storeTags).length - 1 === index &&
                 <Button 
                   className={style['add-button']} 
-                  // onClick={(value) => addTag(value)}
                   onClick={() => handleTagAdd(index)}
                 >
                   Add Tag
@@ -389,9 +235,7 @@ function NewArticle({articleData}) {
         </ul>
 
         <button 
-          // className={style['button']}
           type="submit"
-          // disabled={!isValid}
           className={
             isValid
               ? style['button']
