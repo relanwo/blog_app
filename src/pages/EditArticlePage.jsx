@@ -14,14 +14,32 @@ const EditArticlePage = () => {
   const editOrNewParam = location.pathname
   // useEffect(async () => {
   // // if (editOrNewParam !== '/new-article') {
-  //   async function fetchData() {
-  //     const response = await dispatch(getArticleData(editOrNewParam.slice(10, -5)))
-  //   }
-  //   fetchData()
+    // let articleData;
+    // async function fetchData() {
+    //   const resp = await dispatch(getArticleData(editOrNewParam.slice(10, -5)))
+    //   // eslint-disable-next-line react-hooks/rules-of-hooks
+    //   articleData = useSelector((state) => state.articles.article); 
+    // }
+    // fetchData()
   //   // }
   // }, [dispatch, editOrNewParam])
+  useEffect(() => {
+    dispatch(getArticleData(editOrNewParam.slice(10, -5)))
+  }, [dispatch, editOrNewParam])
 
-  const articleData = useSelector((state) => state.articles.article);  
+	const articleData = useSelector((state) => {
+		// console.log('articles state>', state.articles.articles);
+		if (state.articles.article) {
+			// const { article } = state.articles.article;
+      // console.log('article', state.articles.article)
+			return state.articles.article;
+		} else {
+			return [];
+		}
+	});
+
+  // const articleData = useSelector((state) => state.articles.article);  
+
   // const articleData = useSelector((state) => {
   //   if (state.articles.article) {
   //     const { article } = state.articles.article;

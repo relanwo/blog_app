@@ -16,7 +16,7 @@ const CustomPagination = () => {
 	const page = useSelector((state) => state.articles.page);
 	const pageSize = useSelector((state) => state.articles.pageSize);
 
-	console.log('page >', page);
+	// console.log('page >', page);
 
 	return (
 		<Pagination

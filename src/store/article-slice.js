@@ -224,32 +224,27 @@ const articleSlice = createSlice({
 		},
 		[postNewArticle.fulfilled]: (state, action) => {
 			console.log('postNewArticle.fulfilled');
-			console.log('ACTION', action);
 			state.status = 'resolved';
 			state.article = action.payload;
 		},
 		[postNewArticle.rejected]: (state, action) => {
 			console.log('postNewArticle.rejected');
-			console.log('ACTION', action);
 
 			state.status = 'rejected';
 			state.error = action.payload;
 		},
 		[fetchArticles.pending]: (state, action) => {
 			console.log('fetchArticles.pending');
-			// console.log('ACTION', action)
 			state.status = 'loading';
 			// state.articles = []
 		},
 		[fetchArticles.fulfilled]: (state, action) => {
 			console.log('fetchArticles.fulfilled');
-			console.log('ACTION', action);
 			state.status = 'resolved';
 			state.articles = action.payload;
 		},
 		[fetchArticles.rejected]: (state, action) => {
 			console.log('fetchArticles.rejected');
-			console.log('ACTION', action);
 
 			state.status = 'rejected';
 			state.error = action.payload;
@@ -257,7 +252,6 @@ const articleSlice = createSlice({
 		},
 		[getArticleData.fulfilled]: (state, action) => {
 			console.log('fetchArticles.fulfilled');
-			console.log('ACTION', action);
 			state.status = 'resolved';
 			state.article = action.payload.article;
 		},
