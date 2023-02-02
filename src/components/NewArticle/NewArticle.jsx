@@ -12,7 +12,7 @@ import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
 import {loginUser} from '../../store/user-slice'
 import uniqid from 'uniqid';
-import {setCreatedTag, deleteChosenTag, clearArticle, postNewArticle, setTagChange, getArticleData, clearTagsList, changeChosenTag} from '../../store/article-slice'
+import {setCreatedTag, deleteChosenTag, clearArticle, postNewArticle, setTagChange, getArticleData, clearTagsList, changeChosenTag, editArticle} from '../../store/article-slice'
 import storage from 'redux-persist/lib/storage';
 
 function NewArticle({articleData}) {
@@ -53,15 +53,26 @@ function NewArticle({articleData}) {
 
 
   const onSubmit = async (data) => {
-    sessionStorage.setItem("tagList", JSON.stringify(fields))
-    // console.log('register', )
-    data.tagList = JSON.parse(sessionStorage.getItem("tagList")).map((el) => el?.name !== undefined && el.name)
-    console.log('data',data)
-    await dispatch(postNewArticle(data)).then(() => {
-				navigate('/articles')
-				dispatch(clearTagsList())
-				dispatch(clearArticle())
-		})
+    if (articleData) {
+      data.tagList = JSON.parse(sessionStorage.getItem("tagList"))
+      data.tags = []
+      console.log('edited data', data)
+      await dispatch(editArticle([articleData.slug, data])).then(() => {
+        navigate(`/articles/${articleData.slug}`)
+        dispatch(clearTagsList())
+        dispatch(clearArticle())
+    })
+    } else {
+      sessionStorage.setItem("tagList", JSON.stringify(fields))
+      // console.log('register', )
+      data.tagList = JSON.parse(sessionStorage.getItem("tagList")).map((el) => el?.name !== undefined && el.name)
+      console.log('data',data)
+      await dispatch(postNewArticle(data)).then(() => {
+          navigate('/articles')
+          dispatch(clearTagsList())
+          dispatch(clearArticle())
+      })
+    }
   };
 
   const handleTagAdd = (index) => {

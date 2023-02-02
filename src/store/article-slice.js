@@ -48,6 +48,33 @@ export const postNewArticle = createAsyncThunk(
 	}
 );
 
+export const editArticle = createAsyncThunk(
+	'user/postNewArticle',
+	async function (arr, { rejectWithValue, dispatch }) {
+		const response = await fetch(`https://blog.kata.academy/api/articles/${arr[0]}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Token ${localStorage.getItem('token')}`,
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify({ article: arr[1] }),
+		});
+		console.log('response', response);
+		if (response.status === 403) {
+			return rejectWithValue('You put wrong data');
+		}
+		if (response.status === 422) {
+			return rejectWithValue('Some server error. Please, try again.');
+		}
+		const data = await response.json();
+		console.log('data', data);
+		if (!localStorage.getItem('token'))
+			localStorage.setItem('token', data.user.token);
+		// dispatch(setUser(data.user))
+		return data;
+	}
+);
+
 export const deleteArticle = createAsyncThunk(
 	'user/deleteArticle',
 	async function (slug, { rejectWithValue, dispatch }) {
