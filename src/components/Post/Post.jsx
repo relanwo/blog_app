@@ -35,13 +35,11 @@ export default function Post({ data, showBody }) {
 		);
 	};
   const confirm = () => {
-    console.log('confirm slug', slug)
     dispatch(deleteArticle(slug))
     navigate('/', {replace: true})
   }
 
   const likePost = (slug) => {
-    console.log('favorited', favorited)
     favorited 
     ? dispatch(deleteLike(slug))
     : dispatch(postLike(slug))

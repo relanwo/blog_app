@@ -7,7 +7,6 @@ import { updateUser } from '../../store/user-slice'
 const Profile = () => {
   const dispatch = useDispatch();
   const { username, email, error } = useSelector((state) => state.user);
-  console.log('error', error)
 
   const { 
     register,
