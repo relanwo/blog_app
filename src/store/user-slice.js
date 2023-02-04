@@ -1,8 +1,10 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const postUser = createAsyncThunk(
   'user/postUser',
-  async (arr, { rejectWithValue, dispatch }) => {
+  async (arr, { rejectWithValue }) => {
     const response = await fetch('https://blog.kata.academy/api/users', {
       method: 'POST',
       headers: {
@@ -89,7 +91,7 @@ const userSlice = createSlice({
       state.status = null;
       state.error = null;
     },
-    logOut(state, action) {
+    logOut(state) {
       state.isAuth = false;
       state.email = null;
       state.username = null;
@@ -101,10 +103,10 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [postUser.pending]: (state, action) => {
+    [postUser.pending]: (state) => {
       state.status = 'loading';
     },
-    [postUser.fulfilled]: (state, action) => {
+    [postUser.fulfilled]: (state) => {
       state.status = 'resolved';
     },
     [postUser.rejected]: (state, action) => {

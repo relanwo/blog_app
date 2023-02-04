@@ -7,6 +7,7 @@ function CustomPagination() {
   const dispatch = useDispatch();
 
   const articlesCount = useSelector((state) => {
+    // eslint-disable-next-line no-shadow
     const { articles, articlesCount } = state.articles.articles;
     if (articles) {
       return articlesCount;

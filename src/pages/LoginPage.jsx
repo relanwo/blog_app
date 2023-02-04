@@ -7,7 +7,7 @@ function LoginPage() {
 
   const fromPage = location.state?.from?.pathname || '/';
 
-	return (<SignIn onSubmit={() => navigate(fromPage)}/>);
+  return (<SignIn onSubmit={() => navigate(fromPage)} />);
 }
 
 export default LoginPage;

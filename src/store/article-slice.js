@@ -24,7 +24,7 @@ export const fetchArticles = createAsyncThunk(
 
 export const postNewArticle = createAsyncThunk(
   'user/postNewArticle',
-  async (arr, { rejectWithValue, dispatch }) => {
+  async (arr, { rejectWithValue }) => {
     const response = await fetch('https://blog.kata.academy/api/articles', {
       method: 'POST',
       headers: {
@@ -47,7 +47,7 @@ export const postNewArticle = createAsyncThunk(
 
 export const editArticle = createAsyncThunk(
   'user/postNewArticle',
-  async (arr, { rejectWithValue, dispatch }) => {
+  async (arr, { rejectWithValue }) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${arr[0]}`, {
       method: 'PUT',
       headers: {
@@ -70,7 +70,7 @@ export const editArticle = createAsyncThunk(
 
 export const deleteArticle = createAsyncThunk(
   'user/deleteArticle',
-  async (slug, { rejectWithValue, dispatch }) => {
+  async (slug, { rejectWithValue }) => {
     const response = await fetch(
       `https://blog.kata.academy/api/articles/${slug}`,
       {
@@ -94,7 +94,7 @@ export const deleteArticle = createAsyncThunk(
 
 export const getArticleData = createAsyncThunk(
   'user/getArticleData',
-  async (slug, { rejectWithValue, dispatch }) => {
+  async (slug, { rejectWithValue }) => {
     const response = await fetch(
       `https://blog.kata.academy/api/articles/${slug}`,
       {
@@ -111,7 +111,7 @@ export const getArticleData = createAsyncThunk(
 
 export const deleteLike = createAsyncThunk(
   'user/deleteLike',
-  async (slug, { rejectWithValue, dispatch }) => {
+  async (slug, { rejectWithValue }) => {
     const response = await fetch(
       `https://blog.kata.academy/api/articles/${slug}/favorite`,
       {
@@ -134,7 +134,7 @@ export const deleteLike = createAsyncThunk(
 );
 export const postLike = createAsyncThunk(
   'user/postLike',
-  async (slug, { rejectWithValue, dispatch }) => {
+  async (slug, { rejectWithValue }) => {
     const response = await fetch(
       `https://blog.kata.academy/api/articles/${slug}/favorite`,
       {
@@ -181,15 +181,16 @@ const articleSlice = createSlice({
       const ind = state.article.tagList.findIndex((el) => el.id === action.payload[0]);
       state.article.tagList.splice(ind, 1, action.payload[1]);
     },
-    clearArticle(state, action) {
+    clearArticle(state) {
       state.article = [];
     },
+    // eslint-disable-next-line no-unused-vars
     clearTagsList(state, action) {
       state.tagList = [''];
     },
   },
   extraReducers: {
-    [postNewArticle.pending]: (state, action) => {
+    [postNewArticle.pending]: (state) => {
       state.status = 'loading';
     },
     [postNewArticle.fulfilled]: (state, action) => {
@@ -200,7 +201,7 @@ const articleSlice = createSlice({
       state.status = 'rejected';
       state.error = action.payload;
     },
-    [fetchArticles.pending]: (state, action) => {
+    [fetchArticles.pending]: (state) => {
       state.status = 'loading';
     },
     [fetchArticles.fulfilled]: (state, action) => {

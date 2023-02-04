@@ -1,7 +1,7 @@
-import NewArticle from '../components/NewArticle'
+import NewArticle from '../components/NewArticle';
 
-const NewArticlePage = () => {
-  return (<NewArticle />)
-};
+function NewArticlePage() {
+  return (<NewArticle />);
+}
 
-export default NewArticlePage
+export default NewArticlePage;

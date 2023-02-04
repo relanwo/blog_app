@@ -24,7 +24,17 @@
     "no-plusplus": 0,
     "import/prefer-default-export": 0,
     "default-param-last": 0,
-    "treatUndefinedAsUnspecified": true,
+    "consistent-return": 0,
+    "no-param-reassign": ["error", { "props": false }],
+    "react/jsx-props-no-spreading": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "react/no-array-index-key": 0,
+    "no-use-before-define": ["error", {
+      "functions": true,
+      "classes": true,
+      "variables": false,
+      "allowNamedExports": false
+    }],
     "import/order": 
     [
         1, 
