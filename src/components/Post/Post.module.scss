@@ -7,7 +7,6 @@
   display: flex;
   margin-bottom: 26px;
   flex-wrap: wrap;
-  // height: 77vh;
 }
 
 .header-wrapper {
@@ -30,19 +29,16 @@
 .title {
   margin: 0;
   font-size: 20px;
-// line-height: 28px;
   color: #1890FF;
   display: inline;
   margin-right: 13px;
   font-weight: 400;
   cursor: pointer;
-  // text-decoration: none;
-  overflow-wrap: anywhere; // / break-word
+  overflow-wrap: anywhere;
 }
 
 .likes {
   font-size: 12px;
-// line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
   &:before {
     content: url(../../assets/images/like.svg);
@@ -51,7 +47,6 @@
     top: 2px;
     width: 16px;
     height: 16px;
-
     cursor: pointer;
   }
 }
@@ -68,7 +63,6 @@
 }
 
 .tag {
-  // display: block;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 2px;
   padding: 3px 5px;
@@ -77,10 +71,8 @@
   font-size: 12px;
   line-height: 15px;
   margin-right: 8px;
-  /* @text-color-secondary */
-
   color: rgba(0, 0, 0, 0.5);
-  overflow-wrap: anywhere; // / break-word
+  overflow-wrap: anywhere; 
 }
 
 .description {
@@ -88,7 +80,7 @@
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
   margin: 0;
-  overflow-wrap: anywhere; // / break-word
+  overflow-wrap: anywhere;
 }
 
 .sider {
@@ -106,13 +98,11 @@
 }
 
 .green-btn {
-  /* @success-color */
   color: #52C41A;
   border: 1px solid #52C41A;
   border-radius: 5px;
 }
 .red-btn {
-  /* @error-color */
   color: #F5222D;
   border: 1px solid #F5222D;
   border-radius: 5px;
@@ -121,8 +111,6 @@
 .username {
   font-size: 18px;
   line-height: 28px;
-  // display: flex;
-  // align-items: center;
   color: rgba(0, 0, 0, 0.85);
   margin: 0;
 }
@@ -130,7 +118,6 @@
 .createdAt {
   font-size: 12px;
   line-height: 22px;
-  /* @text-color-secondary */
   color: rgba(0, 0, 0, 0.5);
   margin: 0;
 }
@@ -138,19 +125,14 @@
 .avatar {
   width: 46px;
   height: 46px;
-  // background: url(image.png);
   margin-left: 12px;
   border-radius: 100%;
 }
 
 .body {
-  overflow-wrap: anywhere; // / break-word
-  /* @font-size-base: 14px */
+  overflow-wrap: anywhere; 
   font-family: 'Inter UI';
   font-size: 20px;
   line-height: 28px;
-  /* or 140% */
-
-  /* @text-color */
   color: rgba(0, 0, 0, 0.75);
 }

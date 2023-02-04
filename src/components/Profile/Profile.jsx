@@ -1,36 +1,25 @@
-/* eslint-disable no-unused-vars */
-import { Routes, Route, Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
 import style from './Profile.module.scss';
-import { Button, Form, Input, message, Space, Title, Checkbox, Divider, Alert } from 'antd';
+import {  Alert } from 'antd';
 import { useForm } from "react-hook-form";
-import { setUser, removeUser, postUser, updateUser } from '../../store/user-slice'
+import { updateUser } from '../../store/user-slice'
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { username, email, image, error } = useSelector((state) => state.user);
-  // const { status, error } = useSelector((state) => state.user);
+  const { username, email, error } = useSelector((state) => state.user);
   console.log('error', error)
 
   const { 
-    register, //для регистрации полей формы
-    handleSubmit, // обёртка над нашим хэндлером отправки формы
-    watch, // отслеживает изменения
-    reset, //очистит поля ввода после отправки
-    formState: { errors, isValid } // объект со всякими свойствами
+    register,
+    handleSubmit,
+    reset, 
+    formState: { errors } 
    } = useForm({
     mode: "onChange"
    });
 
   const onSubmit = data => {
-    // alert(JSON.stringify(data))
-    // const {rep_password, ...clearData} = data
     dispatch(updateUser(data))
-    // dispatch(postUser(JSON.stringify(clearData)))
-    console.log(data)
     reset()
   };
 
@@ -48,7 +37,6 @@ const Profile = () => {
             required: "Username field can't be blank"
           })}
           className={style['input']} 
-          // placeholder={username}
           defaultValue={username}
           style={{border: errors.username ? '1px solid red' : '' }}
         />
@@ -69,7 +57,6 @@ const Profile = () => {
             }
           })}
           className={style['input']} 
-          // placeholder={email}
           defaultValue={email}
           style={{border: errors.email ? '1px solid red' : '' }}
         />
@@ -104,9 +91,7 @@ const Profile = () => {
       Avatar image (url)
         <input
           {...register("image", {
-            // required: "Password field can't be blank",
             pattern: {
-              // eslint-disable-next-line no-useless-escape
               value: /^((http|https|ftp):\/\/)?(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)/i,
               message: "Image URL is not valid"
             }
@@ -121,12 +106,10 @@ const Profile = () => {
 
       <button className={style['button']}
         type="submit"
-        // disabled={!isValid}
         >
         Save
       </button>
       {error!==null && <Alert className={'error'} message={error} type="error" showIcon />}
-      {/* {status === 'fullfiled' &&} */}
     </form>
   </>
   )

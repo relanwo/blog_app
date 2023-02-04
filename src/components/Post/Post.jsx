@@ -1,29 +1,23 @@
-/* eslint-disable no-unused-vars */
 import style from './Post.module.scss';
-import { Card, Layout, Button, Popconfirm } from 'antd';
-// console.log(style)
+import { Layout, Button, Popconfirm } from 'antd';
 import { format } from 'date-fns';
 import uniqid from 'uniqid';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSlug } from '../../store/article-slice';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import {deleteArticle} from '../../store/article-slice';
 import { deleteLike, postLike } from '../../store/article-slice'
-import { useCallback, useEffect } from 'react';
 
 const { Header, Content, Sider } = Layout;
 
 export default function Post({ data, showBody }) {
   const navigate = useNavigate();
-	// console.log('showBody',showBody);
 	const dispatch = useDispatch();
   const storageUsername = useSelector((state) => state.user.username)
 
 	const {
 		slug,
-		// id, price, carrier, segments,
 		title,
 		description,
     favorited,
@@ -46,24 +40,12 @@ export default function Post({ data, showBody }) {
     navigate('/', {replace: true})
   }
 
-  // const params = useMemo(() => {
-	//   return element
-	// }, [element])
-  // useCallback(() => {
-  // })
   const likePost = (slug) => {
     console.log('favorited', favorited)
     favorited 
-    // ? console.log('like', slug)
-    // : console.log('dislike', slug)
     ? dispatch(deleteLike(slug))
     : dispatch(postLike(slug))
   }
-
-  // useEffect(() => {
-  //   dispatch(postLike(slug))
-  //   dispatch(deleteLike(slug))
-  // }, [dispatch, favorited, slug])
 
 	return (
 		<div className={style['card']}>
@@ -74,15 +56,12 @@ export default function Post({ data, showBody }) {
 							<h5 className={style['title']}>{title}</h5>
 						</Link>
 						<span 
-              // className={style['likes']}
               className={
                 favorited
                   ? `${style['likes']} ${style['liked']}`
                   : style['likes']
               }
-              // className=`${style['likes']} ${style['liked']}`
               onClick={()=>likePost(slug)}
-              // onClick={()=>console.log('post like', slug)}
             >
               {favoritesCount}
             </span>
@@ -106,7 +85,6 @@ export default function Post({ data, showBody }) {
               <img className={style['avatar']} alt="avatar" src={image} />
             </div>
             {showBody && username === storageUsername ? (
-              // <ReactMarkdown className={style['body']}>{body}</ReactMarkdown>
               <div className={style['wrapper-buttons']}>
               <Popconfirm title="Are you sure delete this task?" okText="Yes" cancelText="No" 
                 placement={'right'}
@@ -116,7 +94,6 @@ export default function Post({ data, showBody }) {
               </Popconfirm>
               <Button 
                 className={style['green-btn']}
-                // onClick={navigate(`/articles/${slug}/edit`)}
                 onClick={() => navigate(`/articles/${slug}/edit`)}
               >Edit</Button>
               </div>

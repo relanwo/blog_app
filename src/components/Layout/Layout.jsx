@@ -1,16 +1,14 @@
-/* eslint-disable no-unused-vars */
 import style from './Layout.module.scss';
 import { Link, Outlet } from 'react-router-dom';
-import { Layout as AntdLayout, Button, Spin, Alert } from 'antd';
+import { Layout as AntdLayout, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {logOut} from '../../store/user-slice'
-const { Header, Content, Footer } = AntdLayout;
+const { Header, Content } = AntdLayout;
 
 function Layout() {
   const dispatch = useDispatch();
   const { username, image } = useSelector((state) => state.user);
 
-  // const isAuth = localStorage.getItem('token');
   const auth = useSelector((state) => state.user.isAuth)
 
   const header = auth 
@@ -26,7 +24,6 @@ function Layout() {
 					<img className={style['avatar']} alt="avatar" src={image} />
         </div>
         <Link 
-        // to="/create-article"
         >
           <Button className={style['log-out']}
                   onClick={() => dispatch(logOut())}
@@ -55,16 +52,6 @@ function Layout() {
 					Realworld Blog
 				</Link>
         {header}
-				{/* <div className={style['sign-wrapper']}>
-          <Link to="/sign-in">
-            <Button className={style['sign-in']} type="link">
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/sign-up">
-					  <Button className={style['sign-up']}>Sign Up</Button>
-          </Link>
-				</div> */}
 			</Header>
 			<Content className={style['content']}>
         <Outlet />

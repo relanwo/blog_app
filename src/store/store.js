@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-// import { createLogger } from 'redux-logger'
 import articleReducer from "./article-slice";
 import userReducer from "./user-slice";
-// import paginationReducer from "./paginationSlice";
 
 import { 
   persistStore, 
@@ -29,19 +26,9 @@ const userConfig = {
   blacklist: ['error', 'status']
 };
 
-const articleConfig = {
-  key: 'articles',
-  storage,
-  blacklist: ['error', 'status', 'article']
-  // , 'article' 'tagList', 
-};
-
 const rootReducer = combineReducers({
   articles: articleReducer,
-  // articles: persistReducer(articleConfig, articleReducer),
-  // user: userReducer,
   user: persistReducer(userConfig, userReducer),
-  // pagination: paginationReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -58,11 +45,3 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 export default store
-// export default configureStore({
-//   reducer: {
-//     articles: articleReducer,
-//     user: userReducer
-//     // pagination: paginationReducer
-//   }
-//   // middleware: [createLogger]
-// })

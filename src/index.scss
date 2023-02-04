@@ -20,15 +20,12 @@ body {
   margin: 0;
 }
 
-// $info-color: #1890FF;
-
 .ant-layout-sider-children {
   display: flex;
 }
 
 .spin {
   position: relative;
-  // top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 50px;

@@ -1,23 +1,11 @@
 .form {
-  /* Frame 1 */
   box-sizing: border-box;
-
-  /* Auto layout */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 48px 32px;
-  // gap: 21px;
-
   width: 52%;
-  // width: 384px;
-  // height: 374px;
-
-  /* Grey / grey-1 */
   background: #FFFFFF;
-  /* Grey / grey-5
-  Border
-  */
   border: 1px solid #D9D9D9;
   box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
   border-radius: 6px;
@@ -40,7 +28,6 @@
   outline: none;
   padding: 8px 12px;
   margin-bottom: 12px;
-  /* display: inline; */
   width: 92%;
   flex: 100%;
   display: block;
@@ -49,36 +36,14 @@
   margin-top: 4px;
 }
 
-// .input-error {
-//   padding: 8px 12px;
-//   margin-bottom: 12px;
-//   /* display: inline; */
-//   width: 92%;
-//   flex: 100%;
-//   display: block;
-//   // border: 1px solid #D9D9D9;
-//   border-radius: 4px;
-//   margin-top: 4px;
-//   border: 1px solid #F5222D;
-// }
-
 .wrapper {
-  // display: inline;
   width: 100%;
   margin-bottom: 0;
-
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  /* identical to box height, or 157% */
-
-  // display: flex;
-  // align-items: center;
-
-  /* Grey / grey-9 */
-
   color: #262626;
 }
 
@@ -95,29 +60,20 @@
   font-size: 16px;
   line-height: 24px;
   margin-top: 21px;
-
-  background: #1890FF; /* Синий цвет фона */ 
+  background: #1890FF; 
   color: white;
   border: none;
   cursor: pointer;
-
 }
 
 .underbutton-text {
   margin: 8px auto 0 auto;
-  /* Regular / 12px | 20 px */
-
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 20px;
-  /* identical to box height, or 167% */
-
   text-align: center;
-
-  /* Grey / grey-7 */
-
   color: #8C8C8C;
 }
 
@@ -126,18 +82,11 @@
 }
 
 .checkbox {
-  /* Regular / 14px | 22px */
-
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  /* or 157% */
-
-
-  /* Grey / grey-8 */
-
   color: #595959;
 }
 

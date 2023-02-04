@@ -1,3 +1,3 @@
-import PostsList from './PostsList';
+import SignIn from './SignIn';
 
-export default PostsList;
+export default SignIn;

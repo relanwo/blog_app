@@ -1,23 +1,12 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-unused-vars */
-import { Routes, Route, Link, Redirect } from 'react-router-dom';
-import Post from '../Post/Post';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 import style from './NewArticle.module.scss';
-import { Button, Form, Input, message, Space, Title, Alert } from 'antd';
-import { useForm, useFieldArray, useWatch } from "react-hook-form";
+import { Button } from 'antd';
+import { useForm, useFieldArray } from "react-hook-form";
 import { useLocation, useNavigate } from 'react-router-dom';
-import {loginUser} from '../../store/user-slice'
-import uniqid from 'uniqid';
-import {setCreatedTag, deleteChosenTag, clearArticle, postNewArticle, setTagChange, getArticleData, clearTagsList, changeChosenTag, editArticle} from '../../store/article-slice'
-import storage from 'redux-persist/lib/storage';
+import {setCreatedTag, deleteChosenTag, clearArticle, postNewArticle, clearTagsList, changeChosenTag, editArticle} from '../../store/article-slice'
 
 function NewArticle({articleData}) {
   const dispatch = useDispatch();
-  // const { status, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,27 +15,20 @@ function NewArticle({articleData}) {
 
   const storeTags = useSelector((state) => state.articles.tagList)
 
-  const [value, setValue] = useState('');
-
-  // const onChange = (event) => setValue(event.target.value);
   const onChange = (field, event) => sessionStorage.setItem(field, event.target.value)
-  // const onChange = (field, event) => sessionStorage.setItem(field, sessionStorage.getItem(...field, event.target.value))
 
   const { 
-    register, //для регистрации полей формы
-    handleSubmit, // обёртка над нашим хэндлером отправки формы
-    watch, 
+    register, 
+    handleSubmit, 
     control,
-    reset, //очистит поля ввода после отправки
-    formState: { errors, isValid } // объект со всякими свойствами
+    formState: { errors, isValid } 
    } = useForm({
     mode: "onChange",
-    // defaultValues: {tags: [{ghgj}]}
     defaultValues: {
       tags: [{name: ''}]
     }
    });
-   const { fields, append, update, remove } = useFieldArray({
+   const { fields, append, remove } = useFieldArray({
     name: 'tags',
     control
    })
@@ -64,7 +46,6 @@ function NewArticle({articleData}) {
     })
     } else {
       sessionStorage.setItem("tagList", JSON.stringify(fields))
-      // console.log('register', )
       data.tagList = JSON.parse(sessionStorage.getItem("tagList")).map((el) => el?.name !== undefined && el.name)
       console.log('data',data)
       await dispatch(postNewArticle(data)).then(() => {
@@ -75,37 +56,19 @@ function NewArticle({articleData}) {
     }
   };
 
-  const handleTagAdd = (index) => {
-    dispatch(setCreatedTag(''))
+  const handleTagAdd = () => dispatch(setCreatedTag(''))
 
-    // const a = JSON.parse(sessionStorage.getItem('tagList'))
-    // a.push('')
-    // sessionStorage.setItem('tagList', JSON.stringify(a))
-    // console.log('sessionStorage.getItem',sessionStorage.getItem('tagList'))
-  }
+  const handleTagRemove = (index) => dispatch(deleteChosenTag(index))
 
-  const handleTagRemove = (index) => {
-    // console.log('handleTagRemove index',index)
-    // if (articleData) {
-    //   articleData.tagList.filter((el, i) => i !== index)
-    // } else {
-      dispatch(deleteChosenTag(index))
-    // }
-  }
-
-  const fghjghjhgvhhj = useSelector((state) => state.articles.article)
   const handleInputChange = (e, index) => {
-    // console.log('state taglist', fghjghjhgvhhj)
     let newData
     if (storeTags) {
       const params = [index, e.target.value]
       dispatch(changeChosenTag(params))
-      // newData = JSON.stringify([...storeTags])
       newData = e.target.value
     } else {
       articleData.tagList[index] = e.target.value
     }
-    console.log('NEW DATA', newData)
 		sessionStorage.setItem('tagList', newData)
   }
 
@@ -128,7 +91,6 @@ function NewArticle({articleData}) {
           <input
             {...register("title", {
               required: "Title field can't be blank",
-              // defaultValue: articleData && sessionStorage.getItem("title")
             })}
             className={style['input']} placeholder="Title"
             style={{border: errors.title ? '1px solid red' : '' }}
@@ -191,7 +153,6 @@ function NewArticle({articleData}) {
                 <Button 
                   type='button'
                   className={style['delete-button']} 
-                  // onClick={() => handleTagRemove(index)}
                   onClick={() => remove(index)}
                 >
                   Delete
@@ -202,7 +163,6 @@ function NewArticle({articleData}) {
                 <Button 
                   type='button'
                   className={style['add-button']} 
-                  // onClick={() => handleTagAdd(index)}
                   onClick={() => append()}
                 >
                   Add Tag

@@ -5,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin: 0 22px 26px 0; */
   padding: 0 22px;
 }
 
@@ -13,7 +12,6 @@
   cursor: pointer;
   margin: 0;
   text-decoration: none;
-  /* @heading-color */
   color: rgba(0, 0, 0, 0.85);
 }
 
@@ -27,13 +25,11 @@
 }
 
 .green-btn {
-  /* @success-color */
   color: #52C41A;
 }
 
 .spin {
   position: relative;
-  // top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 50px;
@@ -50,7 +46,6 @@
 
 .log-out {
   border: 1px solid rgba(0, 0, 0, 0.75);
-  // padding: 18px;
 }
 
 .profile-wrapper {
@@ -59,13 +54,10 @@
 }
 
 .username {
-  /* H6 - Header 6 */
   font-family: 'Inter UI';
   font-size: 18px;
   line-height: 28px;
-  /* @heading-color */
   color: rgba(0, 0, 0, 0.85);
-
   text-decoration: none;
 }
 

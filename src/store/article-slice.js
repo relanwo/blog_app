@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchArticles = createAsyncThunk(
 	'articles/fetchArticles',
@@ -12,7 +11,6 @@ export const fetchArticles = createAsyncThunk(
             Authorization: `Token ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json;charset=utf-8',
           },
-          // body: JSON.stringify({ article: arr }),
         });
 			if (!response.ok) {
 				throw new Error('Server Error');
@@ -49,7 +47,6 @@ export const postNewArticle = createAsyncThunk(
 		console.log('data', data);
 		if (!localStorage.getItem('token'))
 			localStorage.setItem('token', data.user.token);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -76,7 +73,6 @@ export const editArticle = createAsyncThunk(
 		console.log('data', data);
 		if (!localStorage.getItem('token'))
 			localStorage.setItem('token', data.user.token);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -92,7 +88,6 @@ export const deleteArticle = createAsyncThunk(
 					Authorization: `Token ${localStorage.getItem('token')}`,
 					'Content-Type': 'application/json;charset=utf-8',
 				},
-				// body: JSON.stringify({ article: arr }),
 			}
 		);
 		console.log('response', response);
@@ -104,7 +99,6 @@ export const deleteArticle = createAsyncThunk(
 		}
 		const data = await response.json();
 		console.log('data', data);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -116,11 +110,6 @@ export const getArticleData = createAsyncThunk(
 			`https://blog.kata.academy/api/articles/${slug}`,
 			{
 				method: 'GET',
-				// headers: {
-				// 	Authorization: `Token ${localStorage.getItem('token')}`,
-				// 	'Content-Type': 'application/json;charset=utf-8',
-				// },
-				// body: JSON.stringify({ article: arr }),
 			}
 		);
 		console.log('response', response);
@@ -129,7 +118,6 @@ export const getArticleData = createAsyncThunk(
 		}
 		const data = await response.json();
 		console.log('data', data);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -145,7 +133,6 @@ export const deleteLike = createAsyncThunk(
 					Authorization: `Token ${localStorage.getItem('token')}`,
 					'Content-Type': 'application/json;charset=utf-8',
 				},
-				// body: JSON.stringify({ article: arr }),
 			}
 		);
 		console.log('response', response);
@@ -157,7 +144,6 @@ export const deleteLike = createAsyncThunk(
 		}
 		const data = await response.json();
 		console.log('data', data);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -172,7 +158,6 @@ export const postLike = createAsyncThunk(
 					Authorization: `Token ${localStorage.getItem('token')}`,
 					'Content-Type': 'application/json;charset=utf-8',
 				},
-				// body: JSON.stringify({ article: arr }),
 			}
 		);
 		console.log('response', response);
@@ -184,7 +169,6 @@ export const postLike = createAsyncThunk(
 		}
 		const data = await response.json();
 		console.log('data', data);
-		// dispatch(setUser(data.user))
 		return data;
 	}
 );
@@ -198,134 +182,74 @@ const articleSlice = createSlice({
 		page: 1,
 		pageSize: 20,
 		tagList: [''],
-
 		article: null,
 	},
 	reducers: {
-		// getArticles(state, action) {
-		//   console.log('articleSlice STATE >',state);
-		//   console.log('articleSlice ACTION >',action)
-
-		//   //
-		//   state.articles.push(action.payload)
-		// },
 		changePage(state, action) {
-			// console.log('paginationSlice STATE >',state);
-			console.log('changePage ACTION >', action);
-
 			state.page = action.payload;
 		},
 		setCreatedTag(state, action) {
-			console.log('setCreatedTag ACTION >', action);
-
 			state.article.tagList.push(action.payload);
-			// state.tagList.push(action.payload);
 		},
 		deleteChosenTag(state, action) {
-			console.log('deleteChosenTag ACTION >', action);
-
 			state.article.tagList = state.article.tagList.filter((el, i) => i !== action.payload);
-			// state.tagList = state.tagList.filter((el, i) => i !== action.payload);
-
-			console.log('tagList', state.tagList);
 		},
 		changeChosenTag(state, action) {
-			console.log('changeChosenTag ACTION >', action.payload);
-
-			// const ind = state.tagList.findIndex((el) => el.id === action.payload[0]);
-			// state.tagList.splice(ind, 1, action.payload[1]);
       const ind = state.article.tagList.findIndex((el) => el.id === action.payload[0]);
 			state.article.tagList.splice(ind, 1, action.payload[1]);
-
-			console.log('tagList', state.tagList);
 		},
     clearArticle(state, action) {
-			// console.log('paginationSlice STATE >',state);
-			console.log('deleteChosenTag ACTION >', action);
-
 			state.article = [];
 		},
 		clearTagsList(state, action) {
-			// console.log('paginationSlice STATE >',state);
-			console.log('deleteChosenTag ACTION >', action);
-
 			state.tagList = [''];
 		},
 	},
 	extraReducers: {
 		[postNewArticle.pending]: (state, action) => {
-			console.log('postNewArticle.pending');
 			state.status = 'loading';
 		},
 		[postNewArticle.fulfilled]: (state, action) => {
-			console.log('postNewArticle.fulfilled');
 			state.status = 'resolved';
 			state.article = action.payload;
 		},
 		[postNewArticle.rejected]: (state, action) => {
-			console.log('postNewArticle.rejected');
-
 			state.status = 'rejected';
 			state.error = action.payload;
 		},
 		[fetchArticles.pending]: (state, action) => {
-			console.log('fetchArticles.pending');
 			state.status = 'loading';
-			// state.articles = []
 		},
 		[fetchArticles.fulfilled]: (state, action) => {
-			console.log('fetchArticles.fulfilled');
 			state.status = 'resolved';
 			state.articles = action.payload;
-      console.log('state.articles',state.articles)
       sessionStorage.setItem('articles', JSON.stringify(action.payload))
 		},
 		[fetchArticles.rejected]: (state, action) => {
-			console.log('fetchArticles.rejected');
-
 			state.status = 'rejected';
 			state.error = action.payload;
-			// state.articles = []
 		},
 		[getArticleData.fulfilled]: (state, action) => {
-			console.log('fetchArticles.fulfilled');
 			state.status = 'resolved';
 			state.article = action.payload.article;
 		},
-
-
 		[deleteLike.fulfilled]: (state, action) => {
-			console.log('deleteLike.fulfilled');
-			console.log('deleteLike ACTION', action.payloda);
 			state.status = 'resolved';
-			// state.articles = action.payload.article;
       state.articles.articles = state.articles.articles.map((el) => {
 				if (el.slug === action.payload.article.slug) {
 					return action.payload.article;
 				}
 				return el;
 			});
-      // sessionStorage.setItem('articles', state.articles.articles)
-			// state.article.favorited = action.payload.article.favorited;
-			console.log('state.articles', current(state.articles));
 		},
 		[postLike.fulfilled]: (state, action) => {
-			console.log('postLike.fulfilled');
-			console.log('postLike ACTION', action.payloda);
 			state.status = 'resolved';
-      // console.log('state.articles', current(state.articles))
 			state.articles.articles = state.articles.articles.map((el) => {
 				if (el.slug === action.payload.article.slug) {
 					return action.payload.article;
 				}
 				return el;
 			});
-      // sessionStorage.setItem('articles', state.articles.articles)
-      console.log('postLIke state.articles', current(state.articles))
-			// state.article = action.payload.article;
-			// state.article.favorited = true;
-			// state.article.favorited = action.payload.article.favorited;
-			console.log('state.articles', current(state.articles));
 		},
 	},
 });

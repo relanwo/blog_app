@@ -1,31 +1,17 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useMemo } from 'react';
-// import style from './app.module.scss';
-import { Layout, Button, Spin, Alert } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Layout, Spin, Alert } from 'antd';
+import { useSelector } from 'react-redux';
 
 import PostsList from '../components/PostsList/PostsList';
 import CustomPagination from '../components/CustomPagination/CustomPagination';
-import Post from '../components/Post/Post';
 
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	Redirect,
-} from 'react-router-dom';
-
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 function MainPage() {
 	const { status, error } = useSelector((state) => state.articles);
 
 	return (
 		<>
-      {/* <Redirect to="/sign-in"/> */}
 			{status === 'loading' && <Spin className={'spin'} size={'large'} />}
-			{/* {error && <h2>{error}</h2>} */}
 			{error ? (
 				<Alert className={'error'} message={error} type="error" showIcon />
 			) : (

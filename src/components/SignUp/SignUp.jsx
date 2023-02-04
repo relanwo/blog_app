@@ -1,38 +1,30 @@
-/* eslint-disable no-unused-vars */
-import { Routes, Route, Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
 import style from './SignUp.module.scss';
-import { Button, Form, Input, message, Space, Title, Checkbox, Divider, Alert } from 'antd';
+import { Divider, Alert } from 'antd';
 import { useForm } from "react-hook-form";
-import { setUser, removeUser, postUser } from '../../store/user-slice'
+import { postUser } from '../../store/user-slice'
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => state.user);
+  const { error } = useSelector((state) => state.user);
 
   const { 
-    register, //для регистрации полей формы
-    handleSubmit, // обёртка над нашим хэндлером отправки формы
-    watch, // отслеживает изменения
-    reset, //очистит поля ввода после отправки
-    formState: { errors, isValid } // объект со всякими свойствами
+    register, 
+    handleSubmit, 
+    watch, 
+    reset,
+    formState: { errors, isValid } 
    } = useForm({
     mode: "onChange",
     defaultValues: { checkbox: true }
    });
 
   const onSubmit = data => {
-    // alert(JSON.stringify(data))
     const {rep_password, ...clearData} = data
     dispatch(postUser(clearData))
-    // dispatch(postUser(JSON.stringify(clearData)))
     reset()
   };
-
-  // console.log(watch('password') === watch('rep_password'))
 
 	return (
     <>
@@ -121,7 +113,6 @@ function SignUp() {
         <Divider className={style['divider']}/>
 
         <label
-          // for='check'
           className={style['checkbox']} 
           {...register("checkbox", {
             required: "checkbox must be checked",
@@ -129,7 +120,6 @@ function SignUp() {
           style={{color: errors.checkbox ? 'red' : '' }}
         >
           <input type="checkbox" 
-          // id="check"
           defaultChecked 
           />
           I agree to the processing of my personal information
