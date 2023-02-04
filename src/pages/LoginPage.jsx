@@ -39,7 +39,7 @@ function LoginPage() {
   // signin(user, ()=> navigate(fromPage, {replace: true}))
 	return (
 		<>
-      {fromPage}
+      {/* {fromPage} */}
 			<SignIn onSubmit={() => navigate(fromPage)}/>
       {/* {fromPage} */}
 		</>

@@ -28,37 +28,40 @@ const EditArticlePage = () => {
   }, [dispatch, editOrNewParam])
 
 	const articleData = useSelector((state) => {
-		// console.log('articles state>', state.articles.articles);
 		if (state.articles.article) {
-			// const { article } = state.articles.article;
-      // console.log('article', state.articles.article)
 			return state.articles.article;
 		} else {
 			return [];
 		}
 	});
 
-  if (articleData) {
-    sessionStorage.setItem("title", articleData.title)
-    sessionStorage.setItem("description", articleData.description)
-    sessionStorage.setItem("body", articleData.body)
-    articleData.tagList !== [] 
-      && sessionStorage.setItem("tagList", JSON.stringify(articleData.tagList))
-    // sessionStorage.setItem("tagList", JSON.stringify(fields))
-  }
-
-  // const articleData = useSelector((state) => state.articles.article);  
-
-  // const articleData = useSelector((state) => {
-  //   if (state.articles.article) {
-  //     const { article } = state.articles.article;
-  //     return article;
-  //   } else {
-  //     return [];
+  // const func = async () => {
+  //   if (articleData !== undefined) {
+  //     const a = await sessionStorage.setItem("title", articleData.title)
+  //       const b = await (sessionStorage.setItem("description", articleData.description))
+  //       const c = await (sessionStorage.setItem("body", articleData.body))
+  //       const d = await (sessionStorage.setItem("tagList", JSON.stringify(articleData.tagList)))
+  //     // }))
+  //     //  &&
+  //     // articleData.tagList !== [] 
+  //       // && 
+  //     // sessionStorage.setItem("tagList", JSON.stringify(fields))
+  //     // return a;
   //   }
-  // });
+  // }
+
+  // if (articleData &&
+  //   (sessionStorage.getItem("title") === articleData.title &&
+  //   sessionStorage.getItem("description") === articleData.description &&
+  //   sessionStorage.setItem("body") === articleData.body
+  //   // articleData.tagList !== [] 
+  //     && sessionStorage.setItem("tagList") === JSON.stringify(articleData.tagList))) {
+  //   // sessionStorage.setItem("tagList", JSON.stringify(fields))
+  //   return (<NewArticle articleData={articleData}/>)
+  // }  
 
   return (<NewArticle articleData={articleData}/>)
+  // return (func() && <NewArticle articleData={articleData}/>)
 };
 
 export default EditArticlePage

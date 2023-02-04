@@ -37,8 +37,8 @@ const articleConfig = {
 };
 
 const rootReducer = combineReducers({
-  // articles: articleReducer,
-  articles: persistReducer(articleConfig, articleReducer),
+  articles: articleReducer,
+  // articles: persistReducer(articleConfig, articleReducer),
   // user: userReducer,
   user: persistReducer(userConfig, userReducer),
   // pagination: paginationReducer

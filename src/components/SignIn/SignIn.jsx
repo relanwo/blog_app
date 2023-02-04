@@ -33,13 +33,15 @@ function SignIn() {
     mode: "onChange"
    });
 
-  const a ='/articles'
-  const onSubmit = data => {
+  // const a ='/articles'
+  const onSubmit = async (data) => {
     // const {rep_password, ...clearData} = data
-    dispatch(loginUser(data));
+    await dispatch(loginUser(data)).then(() => {
+      navigate(`/articles`)
+    });
     // if (data) navigate('/')
     // if (isAuth) navigate(a)
-    navigate(a)
+    // navigate(a)
     // alert(JSON.stringify(data))
     // reset()
   };

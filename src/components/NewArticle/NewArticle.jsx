@@ -212,7 +212,7 @@ function NewArticle({articleData}) {
           )})}
 
 
-          {(articleData.tagList !== undefined ? articleData.tagList : []).map((singleTag, index) => {
+          {(articleData?.tagList !== undefined ? articleData.tagList : []).map((singleTag, index) => {
             return (
             <li className={style['tag']} key={index}>
               <input 

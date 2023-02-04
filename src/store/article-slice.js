@@ -6,13 +6,19 @@ export const fetchArticles = createAsyncThunk(
 	async function (arr, { rejectWithValue }) {
 		try {
 			const response = await fetch(
-				`https://blog.kata.academy/api/articles?offset=${(arr[0] - 1) * arr[1]}`
-			);
+				`https://blog.kata.academy/api/articles?offset=${(arr[0] - 1) * arr[1]}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          // body: JSON.stringify({ article: arr }),
+        });
 			if (!response.ok) {
 				throw new Error('Server Error');
 			}
 			const data = response.json();
-			// console.log('state', state)
+			console.log('data', data)
 			return data;
 		} catch (error) {
 			console.log('error.message', error.message);
@@ -271,6 +277,8 @@ const articleSlice = createSlice({
 			console.log('fetchArticles.fulfilled');
 			state.status = 'resolved';
 			state.articles = action.payload;
+      console.log('state.articles',state.articles)
+      sessionStorage.setItem('articles', JSON.stringify(action.payload))
 		},
 		[fetchArticles.rejected]: (state, action) => {
 			console.log('fetchArticles.rejected');
@@ -288,26 +296,36 @@ const articleSlice = createSlice({
 
 		[deleteLike.fulfilled]: (state, action) => {
 			console.log('deleteLike.fulfilled');
-			console.log('deleteLike ACTION', action);
+			console.log('deleteLike ACTION', action.payloda);
 			state.status = 'resolved';
-			state.article = action.payload.article;
-			// state.article.favorited = action.payload.article.favorited;
-			console.log('state.article', state.article);
-		},
-		[postLike.fulfilled]: (state, action) => {
-			console.log('postLike.fulfilled');
-			console.log('postLike ACTION', action);
-			state.status = 'resolved';
-			state.articles = state.articles.map((el) => {
+			// state.articles = action.payload.article;
+      state.articles.articles = state.articles.articles.map((el) => {
 				if (el.slug === action.payload.article.slug) {
 					return action.payload.article;
 				}
 				return el;
 			});
+      // sessionStorage.setItem('articles', state.articles.articles)
+			// state.article.favorited = action.payload.article.favorited;
+			console.log('state.articles', current(state.articles));
+		},
+		[postLike.fulfilled]: (state, action) => {
+			console.log('postLike.fulfilled');
+			console.log('postLike ACTION', action.payloda);
+			state.status = 'resolved';
+      // console.log('state.articles', current(state.articles))
+			state.articles.articles = state.articles.articles.map((el) => {
+				if (el.slug === action.payload.article.slug) {
+					return action.payload.article;
+				}
+				return el;
+			});
+      // sessionStorage.setItem('articles', state.articles.articles)
+      console.log('postLIke state.articles', current(state.articles))
 			// state.article = action.payload.article;
 			// state.article.favorited = true;
 			// state.article.favorited = action.payload.article.favorited;
-			console.log('state.article', state.article);
+			console.log('state.articles', current(state.articles));
 		},
 	},
 });

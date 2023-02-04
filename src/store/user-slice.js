@@ -160,6 +160,7 @@ const userSlice = createSlice({
 
       state.status = null;
 			state.error = null;
+      // localStorage.setItem('token', null)
       console.log('logOut STATE >', current(state));
 		},
 		// changePage(state, action) {

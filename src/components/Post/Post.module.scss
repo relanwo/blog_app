@@ -58,6 +58,9 @@
 
 .liked {
   color: red;
+  &:before {
+    content: url(../../assets/images/like_red.svg);
+  }
 }
 
 .tag-list {
