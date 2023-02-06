@@ -29,5 +29,5 @@ export default function PostsList() {
     dispatch(fetchArticles(memoArr));
   }, [dispatch, memoArr]);
 
-  return ({ elements });
+  return (elements);
 }

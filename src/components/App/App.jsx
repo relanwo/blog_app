@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import style from './App.module.scss';
 
+import RequireAuth from '../../hoc/RequireAuth';
 import EditArticlePage from '../../pages/EditArticlePage';
 import LoginPage from '../../pages/LoginPage';
 import MainPage from '../../pages/MainPage';
@@ -8,7 +9,6 @@ import NewArticlePage from '../../pages/NewArticlePage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import RegisterPage from '../../pages/RegisterPage';
 import SingleArticlePage from '../../pages/SingleArticlePage';
-import RequireAuth from '../hoc/RequireAuth';
 import Layout from '../Layout/Layout';
 import Profile from '../Profile/Profile';
 

@@ -175,10 +175,10 @@ const articleSlice = createSlice({
       state.article.tagList.push(action.payload);
     },
     deleteChosenTag(state, action) {
-      state.article.tagList = state.article.tagList.filter((el, i) => i !== action.payload);
+      state.article.tagList = state.article.tagList.filter((element, i) => i !== action.payload);
     },
     changeChosenTag(state, action) {
-      const ind = state.article.tagList.findIndex((el) => el.id === action.payload[0]);
+      const ind = state.article.tagList.findIndex((element) => element.id === action.payload[0]);
       state.article.tagList.splice(ind, 1, action.payload[1]);
     },
     clearArticle(state) {
@@ -219,20 +219,20 @@ const articleSlice = createSlice({
     },
     [deleteLike.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.articles.articles = state.articles.articles.map((el) => {
-        if (el.slug === action.payload.article.slug) {
+      state.articles.articles = state.articles.articles.map((element) => {
+        if (element.slug === action.payload.article.slug) {
           return action.payload.article;
         }
-        return el;
+        return element;
       });
     },
     [postLike.fulfilled]: (state, action) => {
       state.status = 'resolved';
-      state.articles.articles = state.articles.articles.map((el) => {
-        if (el.slug === action.payload.article.slug) {
+      state.articles.articles = state.articles.articles.map((element) => {
+        if (element.slug === action.payload.article.slug) {
           return action.payload.article;
         }
-        return el;
+        return element;
       });
     },
   },

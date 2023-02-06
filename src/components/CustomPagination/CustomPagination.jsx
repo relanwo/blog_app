@@ -23,7 +23,7 @@ function CustomPagination() {
       hideOnSinglePage
       pageSize={pageSize}
       total={articlesCount}
-      onChange={(e) => dispatch(changePage(e))}
+      onChange={(event) => dispatch(changePage(event))}
       showSizeChanger={false}
     />
   );

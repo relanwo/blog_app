@@ -46,7 +46,7 @@ function NewArticle({ articleData }) {
       });
     } else {
       sessionStorage.setItem('tagList', JSON.stringify(fields));
-      data.tagList = JSON.parse(sessionStorage.getItem('tagList')).map((el) => el?.name !== undefined && el.name);
+      data.tagList = JSON.parse(sessionStorage.getItem('tagList')).map((element) => element?.name !== undefined && element.name);
       await dispatch(postNewArticle(data)).then(() => {
         navigate('/articles');
         dispatch(clearTagsList());
@@ -59,14 +59,14 @@ function NewArticle({ articleData }) {
 
   const handleTagRemove = (index) => dispatch(deleteChosenTag(index));
 
-  const handleInputChange = (e, index) => {
+  const handleInputChange = (event, index) => {
     let newData;
     if (storeTags) {
-      const params = [index, e.target.value];
+      const params = [index, event.target.value];
       dispatch(changeChosenTag(params));
-      newData = e.target.value;
+      newData = event.target.value;
     } else {
-      articleData.tagList[index] = e.target.value;
+      articleData.tagList[index] = event.target.value;
     }
     sessionStorage.setItem('tagList', newData);
   };
@@ -90,7 +90,7 @@ function NewArticle({ articleData }) {
           className={style.input}
           placeholder="Title"
           style={{ border: errors.title ? '1px solid red' : '' }}
-          onChange={(e) => onChange('title', e)}
+          onChange={(event) => onChange('title', event)}
           defaultValue={articleData ? sessionStorage.getItem('title') : ''}
         />
       </label>
@@ -107,7 +107,7 @@ function NewArticle({ articleData }) {
           className={style.input}
           placeholder="Description"
           style={{ border: errors.description ? '1px solid red' : '' }}
-          onChange={(e) => onChange('description', e)}
+          onChange={(event) => onChange('description', event)}
           defaultValue={articleData ? sessionStorage.getItem('description') : ''}
         />
       </label>
@@ -125,7 +125,7 @@ function NewArticle({ articleData }) {
           className={style.input}
           placeholder="Text"
           style={{ border: errors.body ? '1px solid red' : '' }}
-          onChange={(e) => onChange('body', e)}
+          onChange={(event) => onChange('body', event)}
           defaultValue={articleData ? sessionStorage.getItem('body') : ''}
         />
       </label>
@@ -175,7 +175,7 @@ function NewArticle({ articleData }) {
               className={style['tags-input']}
               placeholder="Tag"
               defaultValue={singleTag}
-              onChange={(e) => handleInputChange(e, index)}
+              onChange={(event) => handleInputChange(event, index)}
             />
             {(articleData?.tagList !== undefined ? JSON.parse(sessionStorage.getItem('tagList')) : storeTags).length > 1
                 && (
